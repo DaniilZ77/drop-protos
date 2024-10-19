@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package auth;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;authv1";
 
 service AuthService {
@@ -49,5 +51,5 @@ message ValidateTokenRequest {
 message ValidateTokenResponse {
   bool is_valid = 1;
   int64 user_id = 2;
-  int64 expires_at = 3;
+  google.protobuf.Timestamp expires_at = 3;
 }
