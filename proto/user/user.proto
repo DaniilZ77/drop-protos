@@ -11,7 +11,7 @@ service UserService {
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http) = {
       patch: "/v1/user"
-      body: "user"
+      body: "*"
     };
   }
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
