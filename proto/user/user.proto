@@ -15,7 +15,7 @@ service UserService {
     };
   }
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-    option (google.api.http) = {get: "/v1/user/{user.user_id}"};
+    option (google.api.http) = {get: "/v1/user/{user_id}"};
   }
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
     option (google.api.http) = {delete: "/v1/user"};
@@ -44,15 +44,8 @@ message UpdateUserResponse {
   string email = 3;
 }
 
-message GetUser {
-  int64 user_id = 1;
-  string username = 2;
-  string email = 3;
-}
-
 message GetUserRequest {
-  GetUser user = 1;
-  google.protobuf.FieldMask get_mask = 2;
+  int64 user_id = 1;
 }
 
 message GetUserResponse {
