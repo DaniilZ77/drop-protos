@@ -2,13 +2,32 @@ syntax = "proto3";
 
 package auth;
 
+import "google/api/annotations.proto";
+
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;authv1";
 
 service AuthService {
-  rpc Login(LoginRequest) returns (LoginResponse) {}
-  rpc Signup(SignupRequest) returns (SignupResponse) {}
-  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {}
-  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/login"
+      body: "*"
+    };
+  }
+  rpc Signup(SignupRequest) returns (SignupResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/signup"
+      body: "*"
+    };
+  }
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/token/refresh"
+      body: "*"
+    };
+  }
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {
+    option (google.api.http) = {get: "/v1/auth/token/{token}/validate"};
+  }
 }
 
 message LoginRequest {
