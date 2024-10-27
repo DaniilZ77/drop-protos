@@ -15,8 +15,58 @@
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/v1/audio/stream": {
+      "post": {
+        "operationId": "AudioStreamingService_StreamAudio",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/audiostreamingStreamAudioResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of audiostreamingStreamAudioResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/audiostreamingStreamAudioRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AudioStreamingService"
+        ]
+      }
+    }
+  },
   "definitions": {
+    "audiostreamingStreamAudioRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "audiostreamingStreamAudioResponse": {
       "type": "object",
       "properties": {

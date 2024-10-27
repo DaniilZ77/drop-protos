@@ -2,10 +2,17 @@ syntax = "proto3";
 
 package audiostreaming;
 
+import "google/api/annotations.proto";
+
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiostreamingv1";
 
 service AudioStreamingService {
-  rpc StreamAudio(StreamAudioRequest) returns (stream StreamAudioResponse) {}
+  rpc StreamAudio(StreamAudioRequest) returns (stream StreamAudioResponse) {
+    option (google.api.http) = {
+      post: "/v1/audio/stream"
+      body: "*"
+    };
+  }
 }
 
 message StreamAudioRequest {
