@@ -1,13 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "user/user.proto",
-    "version": "version not set"
+    "title": "My API",
+    "version": "0.1"
   },
   "tags": [
     {
       "name": "UserService"
     }
+  ],
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -35,6 +40,11 @@
         },
         "tags": [
           "UserService"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       },
       "patch": {
@@ -65,6 +75,11 @@
         ],
         "tags": [
           "UserService"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
         ]
       }
     },
@@ -200,6 +215,14 @@
           "type": "string"
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "description": "Authentication token, prefixed by Bearer: Bearer 'token'",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }

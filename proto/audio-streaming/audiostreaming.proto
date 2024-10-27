@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package audiostreaming;
+
+option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiostreamingv1";
+
+service AudioStreamingService {
+  rpc StreamAudio(StreamAudioRequest) returns (stream StreamAudioResponse) {}
+}
+
+message StreamAudioRequest {
+  string name = 1;
+}
+
+message StreamAudioResponse {
+  bytes audio = 1;
+}

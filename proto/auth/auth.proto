@@ -3,8 +3,20 @@ syntax = "proto3";
 package auth;
 
 import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;authv1";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "My API"
+    version: "0.1"
+  }
+  host: "localhost:8080"
+  base_path: "/"
+  consumes: "application/json"
+  produces: "application/json"
+  schemes: HTTP
+};
 
 service AuthService {
   rpc Login(LoginRequest) returns (LoginResponse) {
