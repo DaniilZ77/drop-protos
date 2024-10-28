@@ -125,11 +125,22 @@ func RegisterAudioStreamingServiceHandlerClient(ctx context.Context, mux *runtim
 			return
 		}
 
-		forward_AudioStreamingService_StreamAudio_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+		forward_AudioStreamingService_StreamAudio_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) {
+			res, err := resp.Recv()
+			return response_AudioStreamingService_StreamAudio_0{res}, err
+		}, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
+}
+
+type response_AudioStreamingService_StreamAudio_0 struct {
+	*StreamAudioResponse
+}
+
+func (m response_AudioStreamingService_StreamAudio_0) XXX_ResponseBody() interface{} {
+	return m.Audio
 }
 
 var (

@@ -11,6 +11,7 @@ service AudioStreamingService {
     option (google.api.http) = {
       post: "/v1/audio/stream"
       body: "*"
+      response_body: "audio"
     };
   }
 }
