@@ -39,6 +39,23 @@ func request_AudioStreamingService_StreamAudio_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["name"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
+	}
+
+	protoReq.Name, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
+	}
+
 	stream, err := client.StreamAudio(ctx, &protoReq)
 	if err != nil {
 		return nil, metadata, err
@@ -113,7 +130,7 @@ func RegisterAudioStreamingServiceHandlerClient(ctx context.Context, mux *runtim
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/audiostreaming.AudioStreamingService/StreamAudio", runtime.WithHTTPPathPattern("/v1/audio/stream"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/audiostreaming.AudioStreamingService/StreamAudio", runtime.WithHTTPPathPattern("/v1/audio/{name}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -125,26 +142,15 @@ func RegisterAudioStreamingServiceHandlerClient(ctx context.Context, mux *runtim
 			return
 		}
 
-		forward_AudioStreamingService_StreamAudio_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) {
-			res, err := resp.Recv()
-			return response_AudioStreamingService_StreamAudio_0{res}, err
-		}, mux.GetForwardResponseOptions()...)
+		forward_AudioStreamingService_StreamAudio_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-type response_AudioStreamingService_StreamAudio_0 struct {
-	*StreamAudioResponse
-}
-
-func (m response_AudioStreamingService_StreamAudio_0) XXX_ResponseBody() interface{} {
-	return m.Audio
-}
-
 var (
-	pattern_AudioStreamingService_StreamAudio_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "stream"}, ""))
+	pattern_AudioStreamingService_StreamAudio_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "audio", "name"}, ""))
 )
 
 var (
