@@ -35,10 +35,6 @@ func request_AudioStreamingService_StreamAudio_0(ctx context.Context, marshaler 
 	var protoReq StreamAudioRequest
 	var metadata runtime.ServerMetadata
 
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	var (
 		val string
 		ok  bool
@@ -46,14 +42,14 @@ func request_AudioStreamingService_StreamAudio_0(ctx context.Context, marshaler 
 		_   = err
 	)
 
-	val, ok = pathParams["name"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Id, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	stream, err := client.StreamAudio(ctx, &protoReq)
@@ -76,7 +72,7 @@ func request_AudioStreamingService_StreamAudio_0(ctx context.Context, marshaler 
 // GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
 func RegisterAudioStreamingServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AudioStreamingServiceServer) error {
 
-	mux.Handle("POST", pattern_AudioStreamingService_StreamAudio_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_AudioStreamingService_StreamAudio_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -124,13 +120,13 @@ func RegisterAudioStreamingServiceHandler(ctx context.Context, mux *runtime.Serv
 // "AudioStreamingServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
 func RegisterAudioStreamingServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AudioStreamingServiceClient) error {
 
-	mux.Handle("POST", pattern_AudioStreamingService_StreamAudio_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_AudioStreamingService_StreamAudio_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/audiostreaming.AudioStreamingService/StreamAudio", runtime.WithHTTPPathPattern("/v1/audio/{name}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/audiostreaming.AudioStreamingService/StreamAudio", runtime.WithHTTPPathPattern("/v1/audio/{id}/stream"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -150,7 +146,7 @@ func RegisterAudioStreamingServiceHandlerClient(ctx context.Context, mux *runtim
 }
 
 var (
-	pattern_AudioStreamingService_StreamAudio_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "audio", "name"}, ""))
+	pattern_AudioStreamingService_StreamAudio_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "audio", "id", "stream"}, ""))
 )
 
 var (

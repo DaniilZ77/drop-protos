@@ -9,13 +9,10 @@ option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;aud
 
 service AudioStreamingService {
   rpc StreamAudio(StreamAudioRequest) returns (stream google.api.HttpBody) {
-    option (google.api.http) = {
-      post: "/v1/audio/stream"
-      body: "*"
-    };
+    option (google.api.http) = {get: "/v1/audio/{id}/stream"};
   }
 }
 
 message StreamAudioRequest {
-  string name = 1;
+  int64 id = 1;
 }

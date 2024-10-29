@@ -16,8 +16,8 @@
     "application/json"
   ],
   "paths": {
-    "/v1/audio/{name}": {
-      "post": {
+    "/v1/audio/{id}/stream": {
+      "get": {
         "operationId": "AudioStreamingService_StreamAudio",
         "responses": {
           "200": {
@@ -38,18 +38,11 @@
         },
         "parameters": [
           {
-            "name": "name",
+            "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/AudioStreamingServiceStreamAudioBody"
-            }
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -59,9 +52,6 @@
     }
   },
   "definitions": {
-    "AudioStreamingServiceStreamAudioBody": {
-      "type": "object"
-    },
     "apiHttpBody": {
       "type": "object",
       "properties": {
