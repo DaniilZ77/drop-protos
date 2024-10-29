@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "audio-streaming/audiostreaming.proto",
+    "title": "audiostreaming/audiostreaming.proto",
     "version": "version not set"
   },
   "consumes": [

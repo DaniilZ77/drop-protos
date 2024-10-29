@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.28.2
-// source: audio-streaming/audiostreaming.proto
+// source: audiostreaming/audiostreaming.proto
 
 package audiostreamingv1
 
@@ -72,5 +72,5 @@ var AudioStreamingService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AudioStreamingServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams:     []grpc.StreamDesc{},
-	Metadata:    "audio-streaming/audiostreaming.proto",
+	Metadata:    "audiostreaming/audiostreaming.proto",
 }
