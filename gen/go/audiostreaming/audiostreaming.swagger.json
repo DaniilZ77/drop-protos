@@ -4,14 +4,63 @@
     "title": "audiostreaming/audiostreaming.proto",
     "version": "version not set"
   },
+  "tags": [
+    {
+      "name": "AudioStreamingService"
+    }
+  ],
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/v1/audio": {
+      "post": {
+        "operationId": "AudioStreamingService_Upload",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audiostreamingUploadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/audiostreamingUploadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AudioStreamingService"
+        ]
+      }
+    }
+  },
   "definitions": {
+    "audiostreamingUploadRequest": {
+      "type": "object"
+    },
+    "audiostreamingUploadResponse": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
