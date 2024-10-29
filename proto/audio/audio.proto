@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package audiostreaming;
+package audio;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiostreamingv1";
+option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiov1";
 
-service AudioStreamingService {
+service AudioService {
   rpc Upload(UploadRequest) returns (UploadResponse) {
     option (google.api.http) = {
       post: "/v1/audio"

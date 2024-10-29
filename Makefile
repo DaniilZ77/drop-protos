@@ -1,4 +1,4 @@
-SERVICE_NAME=audiostreaming
+SERVICE_NAME=audio
 
 # Proto generator for Go
 gen-go:
