@@ -15,8 +15,56 @@
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/v1/audio": {
+      "post": {
+        "operationId": "AudioService_Upload",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audioUploadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/audioUploadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AudioService"
+        ]
+      }
+    }
+  },
   "definitions": {
+    "audioUploadRequest": {
+      "type": "object",
+      "properties": {
+        "beatId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "beatArtist": {
+          "type": "string"
+        },
+        "beatGenre": {
+          "type": "string"
+        }
+      }
+    },
     "audioUploadResponse": {
       "type": "object",
       "properties": {
