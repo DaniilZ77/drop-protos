@@ -17,8 +17,9 @@ service AudioService {
 
 message UploadRequest {
   int64 beat_id = 1;
-  string beat_artist = 2;
-  string beat_genre = 3;
+  int64 beatmaker_id = 2;
+  string beat_artist = 3;
+  string beat_genre = 4;
 }
 
 message UploadResponse {

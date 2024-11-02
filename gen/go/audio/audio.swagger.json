@@ -57,6 +57,10 @@
           "type": "string",
           "format": "int64"
         },
+        "beatmakerId": {
+          "type": "string",
+          "format": "int64"
+        },
         "beatArtist": {
           "type": "string"
         },
