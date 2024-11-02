@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package audio;
 
-import "google/api/annotations.proto";
-
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiov1";
 
 service AudioService {
-  rpc Upload(UploadRequest) returns (UploadResponse) {
-    option (google.api.http) = {
-      post: "/v1/audio"
-      body: "*"
-    };
-  }
+  rpc Upload(UploadRequest) returns (UploadResponse) {}
 }
 
-message UploadRequest {}
+message UploadRequest {
+  int64 beat_id = 1;
+  string beat_artist = 2;
+  string beat_genre = 3;
+}
 
 message UploadResponse {
-  string url = 1;
+  string beat_upload_url = 1;
 }

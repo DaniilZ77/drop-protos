@@ -15,48 +15,12 @@
   "produces": [
     "application/json"
   ],
-  "paths": {
-    "/v1/audio": {
-      "post": {
-        "operationId": "AudioService_Upload",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/audioUploadResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/audioUploadRequest"
-            }
-          }
-        ],
-        "tags": [
-          "AudioService"
-        ]
-      }
-    }
-  },
+  "paths": {},
   "definitions": {
-    "audioUploadRequest": {
-      "type": "object"
-    },
     "audioUploadResponse": {
       "type": "object",
       "properties": {
-        "url": {
+        "beatUploadUrl": {
           "type": "string"
         }
       }
