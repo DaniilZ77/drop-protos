@@ -3,6 +3,7 @@ syntax = "proto3";
 package auth;
 
 import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;authv1";
@@ -43,8 +44,10 @@ service AuthService {
 }
 
 message LoginRequest {
-  string email = 1;
-  string password = 2;
+  google.protobuf.FieldMask login_mask = 1;
+  string email = 2;
+  string telephone = 3;
+  string password = 4;
 }
 
 message LoginResponse {
@@ -54,14 +57,19 @@ message LoginResponse {
 
 message SignupRequest {
   string username = 1;
-  string email = 2;
-  string password = 3;
+  google.protobuf.FieldMask signup_mask = 2;
+  string email = 3;
+  string telephone = 4;
+  string pseudonym = 5;
+  string password = 6;
 }
 
 message SignupResponse {
   int64 user_id = 1;
   string username = 2;
   string email = 3;
+  string telephone = 4;
+  string pseudonym = 5;
 }
 
 message RefreshTokenRequest {

@@ -152,7 +152,13 @@
     "authLoginRequest": {
       "type": "object",
       "properties": {
+        "loginMask": {
+          "type": "string"
+        },
         "email": {
+          "type": "string"
+        },
+        "telephone": {
           "type": "string"
         },
         "password": {
@@ -196,7 +202,16 @@
         "username": {
           "type": "string"
         },
+        "signupMask": {
+          "type": "string"
+        },
         "email": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "pseudonym": {
           "type": "string"
         },
         "password": {
@@ -215,6 +230,12 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "pseudonym": {
           "type": "string"
         }
       }
