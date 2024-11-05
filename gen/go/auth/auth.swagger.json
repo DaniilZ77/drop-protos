@@ -21,6 +21,38 @@
     "application/json"
   ],
   "paths": {
+    "/v1/auth/email/confirm": {
+      "post": {
+        "operationId": "AuthService_ConfirmEmail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authConfirmEmailResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authConfirmEmailRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
     "/v1/auth/login": {
       "post": {
         "operationId": "AuthService_Login",
@@ -149,6 +181,17 @@
     }
   },
   "definitions": {
+    "authConfirmEmailRequest": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "authConfirmEmailResponse": {
+      "type": "object"
+    },
     "authLoginRequest": {
       "type": "object",
       "properties": {

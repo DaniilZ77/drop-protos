@@ -1,4 +1,4 @@
-SERVICE_NAME=user
+SERVICE_NAME=auth
 
 # Proto generator for Go
 gen-go:
