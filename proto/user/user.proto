@@ -4,6 +4,7 @@ package user;
 
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;userv1";
@@ -63,7 +64,12 @@ message UpdatePassword {
 message UpdateUser {
   string username = 1;
   string email = 2;
-  UpdatePassword password = 3;
+  string first_name = 3;
+  string last_name = 4;
+  string middle_name = 5;
+  string telephone = 6;
+  string pseudonym = 7;
+  UpdatePassword password = 8;
 }
 
 message UpdateUserRequest {
@@ -75,6 +81,11 @@ message UpdateUserResponse {
   int64 user_id = 1;
   string username = 2;
   string email = 3;
+  string first_name = 4;
+  string last_name = 5;
+  string middle_name = 6;
+  string telephone = 7;
+  string pseudonym = 8;
 }
 
 message GetUserRequest {
@@ -85,7 +96,14 @@ message GetUserResponse {
   int64 user_id = 1;
   string username = 2;
   string email = 3;
-  bool is_deleted = 4;
+  string first_name = 4;
+  string last_name = 5;
+  string middle_name = 6;
+  string telephone = 7;
+  string pseudonym = 8;
+  bool is_deleted = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
 }
 
 message DeleteUserRequest {}

@@ -160,8 +160,31 @@
         "email": {
           "type": "string"
         },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "pseudonym": {
+          "type": "string"
+        },
         "isDeleted": {
           "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -183,6 +206,21 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "pseudonym": {
           "type": "string"
         },
         "password": {
@@ -212,6 +250,21 @@
           "type": "string"
         },
         "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "pseudonym": {
           "type": "string"
         }
       }
