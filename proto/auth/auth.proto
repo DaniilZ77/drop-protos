@@ -3,7 +3,6 @@ syntax = "proto3";
 package auth;
 
 import "google/api/annotations.proto";
-import "google/protobuf/field_mask.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;authv1";
