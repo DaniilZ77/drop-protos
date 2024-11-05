@@ -55,18 +55,24 @@ message LoginResponse {
 
 message SignupRequest {
   string username = 1;
-  string email = 2;
-  string telephone = 3;
-  string pseudonym = 4;
-  string password = 5;
+  string first_name = 2;
+  string last_name = 3;
+  string middle_name = 4;
+  string email = 5;
+  string telephone = 6;
+  string pseudonym = 7;
+  string password = 8;
 }
 
 message SignupResponse {
   int64 user_id = 1;
   string username = 2;
-  string email = 3;
-  string telephone = 4;
-  string pseudonym = 5;
+  string first_name = 3;
+  string last_name = 4;
+  string middle_name = 5;
+  string email = 6;
+  string telephone = 7;
+  string pseudonym = 8;
 }
 
 message RefreshTokenRequest {

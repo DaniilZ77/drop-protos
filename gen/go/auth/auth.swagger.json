@@ -199,6 +199,15 @@
         "username": {
           "type": "string"
         },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
         "email": {
           "type": "string"
         },
@@ -221,6 +230,15 @@
           "format": "int64"
         },
         "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "middleName": {
           "type": "string"
         },
         "email": {
