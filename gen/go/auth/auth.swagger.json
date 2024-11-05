@@ -21,14 +21,14 @@
     "application/json"
   ],
   "paths": {
-    "/v1/auth/email/confirm": {
+    "/v1/auth/email/verify": {
       "post": {
-        "operationId": "AuthService_ConfirmEmail",
+        "operationId": "AuthService_VerifyEmail",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/authConfirmEmailResponse"
+              "$ref": "#/definitions/authVerifyEmailResponse"
             }
           },
           "default": {
@@ -44,8 +44,38 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/authConfirmEmailRequest"
+              "$ref": "#/definitions/authVerifyEmailRequest"
             }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/v1/auth/email/{email}/resend": {
+      "get": {
+        "operationId": "AuthService_ResendEmail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authResendEmailResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "tags": [
@@ -181,17 +211,6 @@
     }
   },
   "definitions": {
-    "authConfirmEmailRequest": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string"
-        }
-      }
-    },
-    "authConfirmEmailResponse": {
-      "type": "object"
-    },
     "authLoginRequest": {
       "type": "object",
       "properties": {
@@ -235,6 +254,9 @@
           "type": "string"
         }
       }
+    },
+    "authResendEmailResponse": {
+      "type": "object"
     },
     "authSignupRequest": {
       "type": "object",
@@ -306,6 +328,17 @@
           "format": "int64"
         }
       }
+    },
+    "authVerifyEmailRequest": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "authVerifyEmailResponse": {
+      "type": "object"
     },
     "protobufAny": {
       "type": "object",

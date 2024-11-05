@@ -40,11 +40,14 @@ service AuthService {
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {
     option (google.api.http) = {get: "/v1/auth/token/{token}/validate"};
   }
-  rpc ConfirmEmail(ConfirmEmailRequest) returns (ConfirmEmailResponse) {
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse) {
     option (google.api.http) = {
-      post: "/v1/auth/email/confirm"
+      post: "/v1/auth/email/verify"
       body: "*"
     };
+  }
+  rpc ResendEmail(ResendEmailRequest) returns (ResendEmailResponse) {
+    option (google.api.http) = {get: "/v1/auth/email/{email}/resend"};
   }
 }
 
@@ -99,8 +102,14 @@ message ValidateTokenResponse {
   int64 user_id = 2;
 }
 
-message ConfirmEmailRequest {
+message VerifyEmailRequest {
   string code = 1;
 }
 
-message ConfirmEmailResponse {}
+message VerifyEmailResponse {}
+
+message ResendEmailRequest {
+  string email = 1;
+}
+
+message ResendEmailResponse {}
