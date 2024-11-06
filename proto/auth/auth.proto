@@ -46,8 +46,8 @@ service AuthService {
       body: "*"
     };
   }
-  rpc ResendEmail(ResendEmailRequest) returns (ResendEmailResponse) {
-    option (google.api.http) = {get: "/v1/auth/email/{email}/resend"};
+  rpc SendEmail(SendEmailRequest) returns (SendEmailResponse) {
+    option (google.api.http) = {get: "/v1/auth/email/{email}/send"};
   }
 }
 
@@ -108,8 +108,8 @@ message VerifyEmailRequest {
 
 message VerifyEmailResponse {}
 
-message ResendEmailRequest {
+message SendEmailRequest {
   string email = 1;
 }
 
-message ResendEmailResponse {}
+message SendEmailResponse {}
