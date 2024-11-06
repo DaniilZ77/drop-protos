@@ -314,6 +314,12 @@
         },
         "pseudonym": {
           "type": "string"
+        },
+        "isEmailVerified": {
+          "type": "boolean"
+        },
+        "isTelephoneVerified": {
+          "type": "boolean"
         }
       }
     },

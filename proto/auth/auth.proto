@@ -82,6 +82,8 @@ message SignupResponse {
   string email = 6;
   string telephone = 7;
   string pseudonym = 8;
+  bool is_email_verified = 9;
+  bool is_telephone_verified = 10;
 }
 
 message RefreshTokenRequest {
