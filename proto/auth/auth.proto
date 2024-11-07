@@ -56,7 +56,7 @@ service AuthService {
     };
   }
   rpc SendTelephone(SendTelephoneRequest) returns (SendTelephoneResponse) {
-    option (google.api.http) = {get: "/v1/auth/telephone/send"};
+    option (google.api.http) = {get: "/v1/auth/telephone/{telephone}/send"};
   }
 }
 
@@ -131,6 +131,8 @@ message VerifyTelephoneRequest {
 
 message VerifyTelephoneResponse {}
 
-message SendTelephoneRequest {}
+message SendTelephoneRequest {
+  string telephone = 1;
+}
 
 message SendTelephoneResponse {}
