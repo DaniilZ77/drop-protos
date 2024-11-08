@@ -13,6 +13,9 @@ service AudioService {
       body: "*"
     };
   }
+  rpc GetBeatMeta(GetBeatMetaRequest) returns (GetBeatMetaResponse) {
+    option (google.api.http) = {get: "/v1/audio/{beat_id}"};
+  }
 }
 
 message UploadRequest {
@@ -23,4 +26,20 @@ message UploadRequest {
 
 message UploadResponse {
   string beat_upload_url = 1;
+}
+
+message GetBeatMetaRequest {
+  int64 beat_id = 1;
+}
+
+message Beatmaker {
+  int64 id = 1;
+  string username = 2;
+  string pseudonym = 3;
+}
+
+message GetBeatMetaResponse {
+  int64 id = 1;
+  Beatmaker beatmaker = 2;
+  repeated string beat_genre = 3;
 }
