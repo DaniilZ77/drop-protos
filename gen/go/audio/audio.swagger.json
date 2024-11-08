@@ -103,6 +103,12 @@
           "type": "string",
           "format": "int64"
         },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
         "beatmaker": {
           "$ref": "#/definitions/audioBeatmaker"
         },
@@ -124,6 +130,12 @@
         "beatmakerId": {
           "type": "string",
           "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
         },
         "beatGenre": {
           "type": "array",

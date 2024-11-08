@@ -21,7 +21,9 @@ service AudioService {
 message UploadRequest {
   int64 beat_id = 1;
   int64 beatmaker_id = 2;
-  repeated string beat_genre = 3;
+  string name = 3;
+  string description = 4;
+  repeated string beat_genre = 5;
 }
 
 message UploadResponse {
@@ -40,6 +42,8 @@ message Beatmaker {
 
 message GetBeatMetaResponse {
   int64 id = 1;
-  Beatmaker beatmaker = 2;
-  repeated string beat_genre = 3;
+  string name = 2;
+  string description = 3;
+  Beatmaker beatmaker = 4;
+  repeated string beat_genre = 5;
 }
