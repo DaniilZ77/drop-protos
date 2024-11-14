@@ -115,14 +115,14 @@
         ]
       }
     },
-    "/v1/auth/telephone/{telephone}/send": {
+    "/v1/auth/sms/{telephone}/send": {
       "get": {
-        "operationId": "AuthService_SendTelephone",
+        "operationId": "AuthService_SendSMS",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/authSendTelephoneResponse"
+              "$ref": "#/definitions/authSendSMSResponse"
             }
           },
           "default": {
@@ -288,7 +288,7 @@
     "authSendEmailResponse": {
       "type": "object"
     },
-    "authSendTelephoneResponse": {
+    "authSendSMSResponse": {
       "type": "object"
     },
     "authSignupRequest": {

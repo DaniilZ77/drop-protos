@@ -43,8 +43,8 @@ service AuthService {
   rpc SendEmail(SendEmailRequest) returns (SendEmailResponse) {
     option (google.api.http) = {get: "/v1/auth/email/{email}/send"};
   }
-  rpc SendTelephone(SendTelephoneRequest) returns (SendTelephoneResponse) {
-    option (google.api.http) = {get: "/v1/auth/telephone/{telephone}/send"};
+  rpc SendSMS(SendSMSRequest) returns (SendSMSResponse) {
+    option (google.api.http) = {get: "/v1/auth/sms/{telephone}/send"};
   }
   rpc Verify(VerifyRequest) returns (VerifyResponse) {
     option (google.api.http) = {
@@ -119,8 +119,8 @@ message SendEmailRequest {
 
 message SendEmailResponse {}
 
-message SendTelephoneRequest {
+message SendSMSRequest {
   string telephone = 1;
 }
 
-message SendTelephoneResponse {}
+message SendSMSResponse {}
