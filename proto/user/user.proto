@@ -61,6 +61,16 @@ message UpdatePassword {
   string new_password = 2;
 }
 
+message UpdateEmail {
+  string email = 1;
+  string code = 2;
+}
+
+message UpdateTelephone {
+  string telephone = 1;
+  string code = 2;
+}
+
 message UpdateUser {
   string username = 1;
   string email = 2;
