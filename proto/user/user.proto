@@ -73,11 +73,11 @@ message UpdateTelephone {
 
 message UpdateUser {
   string username = 1;
-  string email = 2;
+  UpdateEmail email = 2;
   string first_name = 3;
   string last_name = 4;
   string middle_name = 5;
-  string telephone = 6;
+  UpdateTelephone telephone = 6;
   string pseudonym = 7;
   UpdatePassword password = 8;
 }
