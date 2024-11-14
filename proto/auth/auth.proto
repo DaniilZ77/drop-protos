@@ -40,23 +40,17 @@ service AuthService {
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {
     option (google.api.http) = {get: "/v1/auth/token/{token}/validate"};
   }
-  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse) {
-    option (google.api.http) = {
-      post: "/v1/auth/email/verify"
-      body: "*"
-    };
-  }
   rpc SendEmail(SendEmailRequest) returns (SendEmailResponse) {
     option (google.api.http) = {get: "/v1/auth/email/{email}/send"};
   }
-  rpc VerifyTelephone(VerifyTelephoneRequest) returns (VerifyTelephoneResponse) {
-    option (google.api.http) = {
-      post: "/v1/auth/telephone/verify"
-      body: "*"
-    };
-  }
   rpc SendTelephone(SendTelephoneRequest) returns (SendTelephoneResponse) {
     option (google.api.http) = {get: "/v1/auth/telephone/{telephone}/send"};
+  }
+  rpc Verify(VerifyRequest) returns (VerifyResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/verify"
+      body: "*"
+    };
   }
 }
 
@@ -113,23 +107,17 @@ message ValidateTokenResponse {
   int64 user_id = 2;
 }
 
-message VerifyEmailRequest {
+message VerifyRequest {
   string code = 1;
 }
 
-message VerifyEmailResponse {}
+message VerifyResponse {}
 
 message SendEmailRequest {
   string email = 1;
 }
 
 message SendEmailResponse {}
-
-message VerifyTelephoneRequest {
-  string code = 1;
-}
-
-message VerifyTelephoneResponse {}
 
 message SendTelephoneRequest {
   string telephone = 1;

@@ -19,14 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Login_FullMethodName           = "/auth.AuthService/Login"
-	AuthService_Signup_FullMethodName          = "/auth.AuthService/Signup"
-	AuthService_RefreshToken_FullMethodName    = "/auth.AuthService/RefreshToken"
-	AuthService_ValidateToken_FullMethodName   = "/auth.AuthService/ValidateToken"
-	AuthService_VerifyEmail_FullMethodName     = "/auth.AuthService/VerifyEmail"
-	AuthService_SendEmail_FullMethodName       = "/auth.AuthService/SendEmail"
-	AuthService_VerifyTelephone_FullMethodName = "/auth.AuthService/VerifyTelephone"
-	AuthService_SendTelephone_FullMethodName   = "/auth.AuthService/SendTelephone"
+	AuthService_Login_FullMethodName         = "/auth.AuthService/Login"
+	AuthService_Signup_FullMethodName        = "/auth.AuthService/Signup"
+	AuthService_RefreshToken_FullMethodName  = "/auth.AuthService/RefreshToken"
+	AuthService_ValidateToken_FullMethodName = "/auth.AuthService/ValidateToken"
+	AuthService_SendEmail_FullMethodName     = "/auth.AuthService/SendEmail"
+	AuthService_SendTelephone_FullMethodName = "/auth.AuthService/SendTelephone"
+	AuthService_Verify_FullMethodName        = "/auth.AuthService/Verify"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -37,10 +36,9 @@ type AuthServiceClient interface {
 	Signup(ctx context.Context, in *SignupRequest, opts ...grpc.CallOption) (*SignupResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
-	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*VerifyEmailResponse, error)
 	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*SendEmailResponse, error)
-	VerifyTelephone(ctx context.Context, in *VerifyTelephoneRequest, opts ...grpc.CallOption) (*VerifyTelephoneResponse, error)
 	SendTelephone(ctx context.Context, in *SendTelephoneRequest, opts ...grpc.CallOption) (*SendTelephoneResponse, error)
+	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error)
 }
 
 type authServiceClient struct {
@@ -91,30 +89,10 @@ func (c *authServiceClient) ValidateToken(ctx context.Context, in *ValidateToken
 	return out, nil
 }
 
-func (c *authServiceClient) VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*VerifyEmailResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerifyEmailResponse)
-	err := c.cc.Invoke(ctx, AuthService_VerifyEmail_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *authServiceClient) SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*SendEmailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SendEmailResponse)
 	err := c.cc.Invoke(ctx, AuthService_SendEmail_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *authServiceClient) VerifyTelephone(ctx context.Context, in *VerifyTelephoneRequest, opts ...grpc.CallOption) (*VerifyTelephoneResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerifyTelephoneResponse)
-	err := c.cc.Invoke(ctx, AuthService_VerifyTelephone_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -131,6 +109,16 @@ func (c *authServiceClient) SendTelephone(ctx context.Context, in *SendTelephone
 	return out, nil
 }
 
+func (c *authServiceClient) Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyResponse)
+	err := c.cc.Invoke(ctx, AuthService_Verify_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -139,10 +127,9 @@ type AuthServiceServer interface {
 	Signup(context.Context, *SignupRequest) (*SignupResponse, error)
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
 	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
-	VerifyEmail(context.Context, *VerifyEmailRequest) (*VerifyEmailResponse, error)
 	SendEmail(context.Context, *SendEmailRequest) (*SendEmailResponse, error)
-	VerifyTelephone(context.Context, *VerifyTelephoneRequest) (*VerifyTelephoneResponse, error)
 	SendTelephone(context.Context, *SendTelephoneRequest) (*SendTelephoneResponse, error)
+	Verify(context.Context, *VerifyRequest) (*VerifyResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -165,17 +152,14 @@ func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshToke
 func (UnimplementedAuthServiceServer) ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
 }
-func (UnimplementedAuthServiceServer) VerifyEmail(context.Context, *VerifyEmailRequest) (*VerifyEmailResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method VerifyEmail not implemented")
-}
 func (UnimplementedAuthServiceServer) SendEmail(context.Context, *SendEmailRequest) (*SendEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendEmail not implemented")
 }
-func (UnimplementedAuthServiceServer) VerifyTelephone(context.Context, *VerifyTelephoneRequest) (*VerifyTelephoneResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method VerifyTelephone not implemented")
-}
 func (UnimplementedAuthServiceServer) SendTelephone(context.Context, *SendTelephoneRequest) (*SendTelephoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendTelephone not implemented")
+}
+func (UnimplementedAuthServiceServer) Verify(context.Context, *VerifyRequest) (*VerifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Verify not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -270,24 +254,6 @@ func _AuthService_ValidateToken_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_VerifyEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyEmailRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServiceServer).VerifyEmail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AuthService_VerifyEmail_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).VerifyEmail(ctx, req.(*VerifyEmailRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _AuthService_SendEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendEmailRequest)
 	if err := dec(in); err != nil {
@@ -306,24 +272,6 @@ func _AuthService_SendEmail_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_VerifyTelephone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyTelephoneRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServiceServer).VerifyTelephone(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AuthService_VerifyTelephone_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).VerifyTelephone(ctx, req.(*VerifyTelephoneRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _AuthService_SendTelephone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendTelephoneRequest)
 	if err := dec(in); err != nil {
@@ -338,6 +286,24 @@ func _AuthService_SendTelephone_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServiceServer).SendTelephone(ctx, req.(*SendTelephoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_Verify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).Verify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_Verify_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).Verify(ctx, req.(*VerifyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -366,20 +332,16 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_ValidateToken_Handler,
 		},
 		{
-			MethodName: "VerifyEmail",
-			Handler:    _AuthService_VerifyEmail_Handler,
-		},
-		{
 			MethodName: "SendEmail",
 			Handler:    _AuthService_SendEmail_Handler,
 		},
 		{
-			MethodName: "VerifyTelephone",
-			Handler:    _AuthService_VerifyTelephone_Handler,
-		},
-		{
 			MethodName: "SendTelephone",
 			Handler:    _AuthService_SendTelephone_Handler,
+		},
+		{
+			MethodName: "Verify",
+			Handler:    _AuthService_Verify_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
