@@ -38,17 +38,23 @@ service AuthService {
     };
   }
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {
-    option (google.api.http) = {get: "/v1/auth/token/{token}/validate"};
+    option (google.api.http) = {get: "/v1/auth/token/validate"};
   }
   rpc SendEmail(SendEmailRequest) returns (SendEmailResponse) {
-    option (google.api.http) = {get: "/v1/auth/email/{email}/send"};
+    option (google.api.http) = {get: "/v1/auth/email/send"};
   }
   rpc SendSMS(SendSMSRequest) returns (SendSMSResponse) {
-    option (google.api.http) = {get: "/v1/auth/sms/{telephone}/send"};
+    option (google.api.http) = {get: "/v1/auth/sms/send"};
   }
   rpc Verify(VerifyRequest) returns (VerifyResponse) {
     option (google.api.http) = {
       post: "/v1/auth/verify"
+      body: "*"
+    };
+  }
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/password/reset"
       body: "*"
     };
   }
@@ -115,12 +121,21 @@ message VerifyResponse {}
 
 message SendEmailRequest {
   string email = 1;
+  bool is_verified = 2;
 }
 
 message SendEmailResponse {}
 
 message SendSMSRequest {
   string telephone = 1;
+  bool is_verified = 2;
 }
 
 message SendSMSResponse {}
+
+message ResetPasswordRequest {
+  string password = 1;
+  string code = 2;
+}
+
+message ResetPasswordResponse {}

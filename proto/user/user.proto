@@ -98,6 +98,8 @@ message UpdateUserResponse {
   string pseudonym = 8;
   bool is_telephone_verified = 9;
   bool is_email_verified = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
 }
 
 message GetUserRequest {
