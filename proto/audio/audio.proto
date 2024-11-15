@@ -13,7 +13,7 @@ service AudioService {
       body: "*"
     };
   }
-  rpc GetBeatMeta(GetBeatMetaRequest) returns (GetBeatMetaResponse) {
+  rpc GetBeat(GetBeatRequest) returns (GetBeatResponse) {
     option (google.api.http) = {get: "/v1/audio/{beat_id}"};
   }
 }
@@ -30,7 +30,7 @@ message UploadResponse {
   string beat_upload_url = 1;
 }
 
-message GetBeatMetaRequest {
+message GetBeatRequest {
   int64 beat_id = 1;
 }
 
@@ -40,7 +40,7 @@ message Beatmaker {
   string pseudonym = 3;
 }
 
-message GetBeatMetaResponse {
+message GetBeatResponse {
   int64 id = 1;
   string name = 2;
   string description = 3;
