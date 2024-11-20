@@ -148,7 +148,7 @@
     "audioUploadResponse": {
       "type": "object",
       "properties": {
-        "beatUploadUrl": {
+        "fileUploadUrl": {
           "type": "string"
         },
         "imageUploadUrl": {
