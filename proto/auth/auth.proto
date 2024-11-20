@@ -77,8 +77,8 @@ message SignupRequest {
   string first_name = 2;
   string last_name = 3;
   string middle_name = 4;
-  string email = 5;
-  string telephone = 6;
+  SignupEmail email = 5;
+  SignupTelephone telephone = 6;
   string pseudonym = 7;
   string password = 8;
 }
@@ -96,6 +96,16 @@ message SignupResponse {
   bool is_telephone_verified = 10;
   google.protobuf.Timestamp created_at = 11;
   google.protobuf.Timestamp updated_at = 12;
+}
+
+message SignupEmail {
+  string email = 1;
+  string code = 2;
+}
+
+message SignupTelephone {
+  string telephone = 1;
+  string code = 2;
 }
 
 message RefreshTokenRequest {
