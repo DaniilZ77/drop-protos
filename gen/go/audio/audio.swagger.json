@@ -150,6 +150,9 @@
       "properties": {
         "beatUploadUrl": {
           "type": "string"
+        },
+        "imageUploadUrl": {
+          "type": "string"
         }
       }
     },

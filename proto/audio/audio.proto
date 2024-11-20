@@ -28,6 +28,7 @@ message UploadRequest {
 
 message UploadResponse {
   string beat_upload_url = 1;
+  string image_upload_url = 2;
 }
 
 message GetBeatRequest {
