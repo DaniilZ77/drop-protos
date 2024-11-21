@@ -47,12 +47,6 @@ service AuthService {
   rpc SendSMS(SendSMSRequest) returns (SendSMSResponse) {
     option (google.api.http) = {get: "/v1/auth/sms/send"};
   }
-  rpc Verify(VerifyRequest) returns (VerifyResponse) {
-    option (google.api.http) = {
-      post: "/v1/auth/verify"
-      body: "*"
-    };
-  }
   rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
     option (google.api.http) = {
       post: "/v1/auth/password/reset"
@@ -92,10 +86,8 @@ message SignupResponse {
   string email = 6;
   string telephone = 7;
   string pseudonym = 8;
-  bool is_email_verified = 9;
-  bool is_telephone_verified = 10;
-  google.protobuf.Timestamp created_at = 11;
-  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
 }
 
 message SignupEmail {
@@ -126,12 +118,6 @@ message ValidateTokenResponse {
   int64 user_id = 2;
 }
 
-message VerifyRequest {
-  string code = 1;
-}
-
-message VerifyResponse {}
-
 message SendEmailRequest {
   string email = 1;
   bool is_verified = 2;
@@ -160,8 +146,6 @@ message ResetPasswordResponse {
   string email = 6;
   string telephone = 7;
   string pseudonym = 8;
-  bool is_email_verified = 9;
-  bool is_telephone_verified = 10;
-  google.protobuf.Timestamp created_at = 11;
-  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
 }
