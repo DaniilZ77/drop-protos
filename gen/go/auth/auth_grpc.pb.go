@@ -40,7 +40,7 @@ type AuthServiceClient interface {
 	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*SendEmailResponse, error)
 	SendSMS(ctx context.Context, in *SendSMSRequest, opts ...grpc.CallOption) (*SendSMSResponse, error)
 	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
-	LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error)
+	LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
 
 type authServiceClient struct {
@@ -121,9 +121,9 @@ func (c *authServiceClient) ResetPassword(ctx context.Context, in *ResetPassword
 	return out, nil
 }
 
-func (c *authServiceClient) LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error) {
+func (c *authServiceClient) LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoginTelegramResponse)
+	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, AuthService_LoginTelegram_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -142,7 +142,7 @@ type AuthServiceServer interface {
 	SendEmail(context.Context, *SendEmailRequest) (*SendEmailResponse, error)
 	SendSMS(context.Context, *SendSMSRequest) (*SendSMSResponse, error)
 	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
-	LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error)
+	LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -174,7 +174,7 @@ func (UnimplementedAuthServiceServer) SendSMS(context.Context, *SendSMSRequest) 
 func (UnimplementedAuthServiceServer) ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResetPassword not implemented")
 }
-func (UnimplementedAuthServiceServer) LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error) {
+func (UnimplementedAuthServiceServer) LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginTelegram not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}

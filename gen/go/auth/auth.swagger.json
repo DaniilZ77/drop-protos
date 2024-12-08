@@ -96,7 +96,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/authLoginTelegramResponse"
+              "$ref": "#/definitions/authLoginResponse"
             }
           },
           "default": {
@@ -313,57 +313,11 @@
     "authLoginTelegramRequest": {
       "type": "object",
       "properties": {
-        "externalId": {
-          "type": "string",
-          "format": "int64"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "hash": {
-          "type": "string"
-        }
-      }
-    },
-    "authLoginTelegramResponse": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string",
-          "format": "int64"
-        },
-        "externalId": {
-          "type": "string",
-          "format": "int64"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "username": {
+        "pseudonym": {
           "type": "string"
         },
         "middleName": {
           "type": "string"
-        },
-        "pseudonym": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time"
         }
       }
     },
