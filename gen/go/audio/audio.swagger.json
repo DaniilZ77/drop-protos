@@ -234,7 +234,7 @@
           }
         },
         "note": {
-          "$ref": "#/definitions/audioNote"
+          "$ref": "#/definitions/audioNoteUpload"
         },
         "bpm": {
           "type": "string",
