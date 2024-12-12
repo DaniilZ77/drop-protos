@@ -70,7 +70,7 @@ message GetBeatResponse {
   repeated int64 beat_genre = 5;
   repeated int64 beat_tag = 6;
   repeated int64 beat_mood = 7;
-  Note note = 8;
+  NoteUpload note = 8;
   int64 bpm = 9;
 }
 
