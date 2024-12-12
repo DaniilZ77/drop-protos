@@ -1,4 +1,4 @@
-SERVICE_NAME=auth
+SERVICE_NAME=audio
 
 # Proto generator for Go
 gen-go:

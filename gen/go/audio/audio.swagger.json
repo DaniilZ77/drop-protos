@@ -115,8 +115,42 @@
         "beatGenre": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "format": "int64"
           }
+        },
+        "beatTag": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "beatMood": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "note": {
+          "$ref": "#/definitions/audioNote"
+        },
+        "bpm": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "audioNote": {
+      "type": "object",
+      "properties": {
+        "noteId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "scale": {
+          "type": "string"
         }
       }
     },
@@ -140,8 +174,30 @@
         "beatGenre": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "format": "int64"
           }
+        },
+        "beatTag": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "beatMood": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "note": {
+          "$ref": "#/definitions/audioNote"
+        },
+        "bpm": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
