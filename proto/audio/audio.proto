@@ -16,11 +16,23 @@ service AudioService {
   rpc GetBeat(GetBeatRequest) returns (GetBeatResponse) {
     option (google.api.http) = {get: "/v1/audio/{beat_id}"};
   }
+  rpc GetGenres(GetGenresRequest) returns (GetGenresResponse) {
+    option (google.api.http) = {get: "/v1/audio/genres"};
+  }
+  rpc GetTags(GetTagsRequest) returns (GetTagsResponse) {
+    option (google.api.http) = {get: "/v1/audio/tags"};
+  }
+  rpc GetMoods(GetMoodsRequest) returns (GetMoodsResponse) {
+    option (google.api.http) = {get: "/v1/audio/moods"};
+  }
+  rpc GetNotes(GetNotesRequest) returns (GetNotesResponse) {
+    option (google.api.http) = {get: "/v1/audio/notes"};
+  }
 }
 
-message Note {
-    int64 note_id = 1;
-    string scale = 2;
+message NoteUpload {
+  int64 note_id = 1;
+  string scale = 2;
 }
 
 message UploadRequest {
@@ -31,7 +43,7 @@ message UploadRequest {
   repeated int64 beat_genre = 5;
   repeated int64 beat_tag = 6;
   repeated int64 beat_mood = 7;
-  Note note = 8;
+  NoteUpload note = 8;
   int64 bpm = 9;
 }
 
@@ -60,4 +72,48 @@ message GetBeatResponse {
   repeated int64 beat_mood = 7;
   Note note = 8;
   int64 bpm = 9;
+}
+
+message GetGenresRequest {}
+
+message GetGenresResponse {
+  repeated Genre genres = 1;
+}
+
+message Genre {
+  int64 genre_id = 1;
+  string name = 2;
+}
+
+message GetTagsRequest {}
+
+message GetTagsResponse {
+  repeated Tag tags = 1;
+}
+
+message Tag {
+  int64 tag_id = 1;
+  string name = 2;
+}
+
+message GetMoodsRequest {}
+
+message GetMoodsResponse {
+  repeated Mood moods = 1;
+}
+
+message Mood {
+  int64 mood_id = 1;
+  string name = 2;
+}
+
+message GetNotesRequest {}
+
+message GetNotesResponse {
+  repeated Note notes = 1;
+}
+
+message Note {
+  int64 note_id = 1;
+  string name = 2;
 }
