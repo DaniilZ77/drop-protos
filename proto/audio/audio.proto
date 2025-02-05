@@ -3,48 +3,81 @@ syntax = "proto3";
 package audio;
 
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "protovalidate/validate.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiov1";
 
-service AudioService {
-  rpc Upload(UploadRequest) returns (UploadResponse) {
+service BeatService {
+  rpc UploadBeat(UploadBeatRequest) returns (UploadBeatResponse) {
     option (google.api.http) = {
-      post: "/v1/audio"
+      post: "/v1/beat"
       body: "*"
     };
   }
   rpc GetBeat(GetBeatRequest) returns (GetBeatResponse) {
-    option (google.api.http) = {get: "/v1/audio/{beat_id}"};
+    option (google.api.http) = {get: "/v1/beat/{beat_id}"};
   }
-  rpc GetFilters(GetFiltersRequest) returns (GetFiltersResponse) {
-    option (google.api.http) = {get: "/v1/audio/filters"};
+  rpc GetRandomBeat(GetRandomBeatRequest) returns (GetRandomBeatResponse) {
+    option (google.api.http) = {get: "/v1/beat/random"};
+  }
+  rpc GetBeatmakerBeats(GetBeatmakerBeatsRequest) returns (GetBeatmakerBeatsResponse) {
+    option (google.api.http) = {get: "/v1/beatmaker/{beatmaker_id}/beats"};
+  }
+  rpc GetBeatParams(GetBeatParamsRequest) returns (GetBeatParamsResponse) {
+    option (google.api.http) = {get: "/v1/beat/params"};
   }
 }
 
-message NoteUpload {
-  int64 note = 1;
-  string scale = 2;
+enum Scale {
+  MINOR = 0;
+  MAJOR = 1;
 }
 
-message UploadRequest {
-  int64 beat_id = 1;
-  int64 beatmaker_id = 2;
-  string name = 3;
-  string description = 4;
+message UploadBeatNote {
+  int64 note_id = 1 [(buf.validate.field).int64.gt = 0];
+  Scale scale = 2;
+}
+
+message UploadBeatRequest {
+  option (buf.validate.message).cel = {
+    id: "beat_genre_positive"
+    message: "all genre ids must be positive"
+    expression: "this.beat_genre.all(m, m > 0)"
+  };
+
+  option (buf.validate.message).cel = {
+    id: "beat_tag_positive"
+    message: "all tag ids must be positive"
+    expression: "this.beat_tag.all(m, m > 0)"
+  };
+
+  option (buf.validate.message).cel = {
+    id: "beat_mood_positive"
+    message: "all mood ids must be positive"
+    expression: "this.beat_mood.all(m, m > 0)"
+  };
+
+  int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
+  int64 beatmaker_id = 2 [(buf.validate.field).int64.gt = 0];
+  string name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 30
+  }];
+  string description = 4 [(buf.validate.field).string.max_len = 500];
   repeated int64 beat_genre = 5;
   repeated int64 beat_tag = 6;
   repeated int64 beat_mood = 7;
-  NoteUpload note = 8;
-  int64 bpm = 9;
+  UploadBeatNote note = 8;
+  int64 bpm = 9 [(buf.validate.field).int64 = {
+    gt: 9
+    lte: 600
+  }];
 }
 
-message UploadResponse {
+message UploadBeatResponse {
   string file_upload_url = 1;
   string image_upload_url = 2;
-}
-
-message GetBeatRequest {
-  int64 beat_id = 1;
 }
 
 message Beatmaker {
@@ -55,7 +88,11 @@ message Beatmaker {
 
 message GetBeatNote {
   string name = 1;
-  string scale = 2;
+  Scale scale = 2;
+}
+
+message GetBeatRequest {
+  int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
 }
 
 message GetBeatResponse {
@@ -70,9 +107,9 @@ message GetBeatResponse {
   int64 bpm = 9;
 }
 
-message GetFiltersRequest {}
+message GetBeatParamsRequest {}
 
-message GetFiltersResponse {
+message GetBeatParamsResponse {
   repeated Genre genres = 1;
   repeated Tag tags = 2;
   repeated Mood moods = 3;
@@ -97,4 +134,62 @@ message Mood {
 message Note {
   int64 note_id = 1;
   string name = 2;
+}
+
+message GetRandomBeatNote {
+  string name = 1;
+  Scale scale = 2;
+}
+
+message GetRandomBeatRequest {
+  option (buf.validate.message).cel = {
+    id: "genre_positive"
+    message: "all genre ids must be positive"
+    expression: "this.genre.all(m, m > 0)"
+  };
+
+  option (buf.validate.message).cel = {
+    id: "tag_positive"
+    message: "all tag ids must be positive"
+    expression: "this.tag.all(m, m > 0)"
+  };
+
+  option (buf.validate.message).cel = {
+    id: "mood_positive"
+    message: "all mood ids must be positive"
+    expression: "this.mood.all(m, m > 0)"
+  };
+
+  option (buf.validate.message).cel = {
+    id: "note_name_not_empty"
+    message: "note name must be not empty"
+    expression: "this.note.name.size() > 0"
+  };
+
+  repeated string genre = 1;
+  repeated string mood = 2;
+  repeated string tag = 3;
+  GetRandomBeatNote note = 4;
+}
+
+message GetRandomBeatResponse {
+  int64 beat_id = 1;
+  Beatmaker beatmaker = 2;
+  string image = 3;
+  string name = 4;
+  string description = 5;
+  repeated string genre = 6;
+  repeated string tag = 7;
+  repeated string mood = 8;
+  GetRandomBeatNote note = 9;
+  int64 bpm = 10;
+  google.protobuf.Timestamp created_at = 11;
+}
+
+message GetBeatmakerBeatsRequest {
+  int64 beatmaker_id = 1 [(buf.validate.field).int64.gt = 0];
+}
+
+message GetBeatmakerBeatsResponse {
+  repeated GetBeatResponse beats = 1;
 }
