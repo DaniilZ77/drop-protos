@@ -245,7 +245,8 @@
       "type": "object",
       "properties": {
         "note": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "scale": {
           "type": "string"
