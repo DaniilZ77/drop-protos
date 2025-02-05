@@ -53,6 +53,11 @@ message Beatmaker {
   string pseudonym = 3;
 }
 
+message GetBeatNote {
+  string name = 1;
+  string scale = 2;
+}
+
 message GetBeatResponse {
   int64 id = 1;
   string name = 2;
@@ -61,7 +66,7 @@ message GetBeatResponse {
   repeated string beat_genre = 5;
   repeated string beat_tag = 6;
   repeated string beat_mood = 7;
-  NoteUpload note = 8;
+  GetBeatNote note = 8;
   int64 bpm = 9;
 }
 

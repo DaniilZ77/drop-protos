@@ -130,6 +130,17 @@
         }
       }
     },
+    "audioGetBeatNote": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "string"
+        }
+      }
+    },
     "audioGetBeatResponse": {
       "type": "object",
       "properties": {
@@ -165,7 +176,7 @@
           }
         },
         "note": {
-          "$ref": "#/definitions/audioNoteUpload"
+          "$ref": "#/definitions/audioGetBeatNote"
         },
         "bpm": {
           "type": "string",
