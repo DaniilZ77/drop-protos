@@ -22,7 +22,7 @@ service AudioService {
 }
 
 message NoteUpload {
-  string note = 1;
+  int64 note = 1;
   string scale = 2;
 }
 
