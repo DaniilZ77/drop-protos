@@ -149,22 +149,19 @@
         "beatGenre": {
           "type": "array",
           "items": {
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         },
         "beatTag": {
           "type": "array",
           "items": {
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         },
         "beatMood": {
           "type": "array",
           "items": {
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         },
         "note": {
@@ -236,9 +233,8 @@
     "audioNoteUpload": {
       "type": "object",
       "properties": {
-        "noteId": {
-          "type": "string",
-          "format": "int64"
+        "note": {
+          "type": "string"
         },
         "scale": {
           "type": "string"
