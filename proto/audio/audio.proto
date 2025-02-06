@@ -53,8 +53,8 @@ message UploadBeatRequest {
   };
 
   option (buf.validate.message).cel = {
-    id: "note_name_not_empty"
-    message: "note name must be not empty"
+    id: "note_id_positive"
+    message: "note id must be positive"
     expression: "this.note.note_id > 0"
   };
 
