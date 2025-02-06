@@ -239,7 +239,7 @@
           }
         },
         "note": {
-          "$ref": "#/definitions/audioNote"
+          "$ref": "#/definitions/audioGetBeatsNote"
         },
         "bpm": {
           "type": "string",
@@ -311,6 +311,17 @@
         }
       }
     },
+    "audioGetBeatsNote": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "scale": {
+          "$ref": "#/definitions/audioScale"
+        }
+      }
+    },
     "audioGetBeatsResponse": {
       "type": "object",
       "properties": {
@@ -335,17 +346,6 @@
         },
         "name": {
           "type": "string"
-        }
-      }
-    },
-    "audioNote": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "scale": {
-          "$ref": "#/definitions/audioScale"
         }
       }
     },
@@ -421,6 +421,18 @@
         }
       }
     },
+    "audioUploadBeatNote": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "format": "int64"
+        },
+        "scale": {
+          "$ref": "#/definitions/audioScale"
+        }
+      }
+    },
     "audioUploadBeatRequest": {
       "type": "object",
       "properties": {
@@ -460,7 +472,7 @@
           }
         },
         "note": {
-          "$ref": "#/definitions/audioNote"
+          "$ref": "#/definitions/audioUploadBeatNote"
         },
         "bpm": {
           "type": "string",
