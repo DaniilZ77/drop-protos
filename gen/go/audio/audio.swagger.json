@@ -424,7 +424,7 @@
     "audioUploadBeatNote": {
       "type": "object",
       "properties": {
-        "name": {
+        "noteId": {
           "type": "string",
           "format": "int64"
         },
