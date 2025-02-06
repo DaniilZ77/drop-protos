@@ -55,7 +55,7 @@ message UploadBeatRequest {
   option (buf.validate.message).cel = {
     id: "note_name_not_empty"
     message: "note name must be not empty"
-    expression: "this.note.name.size() > 0"
+    expression: "this.note.note_id > 0"
   };
 
   int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
