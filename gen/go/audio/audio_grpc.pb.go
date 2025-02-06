@@ -19,11 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BeatService_UploadBeat_FullMethodName        = "/audio.BeatService/UploadBeat"
-	BeatService_GetBeat_FullMethodName           = "/audio.BeatService/GetBeat"
-	BeatService_GetRandomBeat_FullMethodName     = "/audio.BeatService/GetRandomBeat"
-	BeatService_GetBeatmakerBeats_FullMethodName = "/audio.BeatService/GetBeatmakerBeats"
-	BeatService_GetBeatParams_FullMethodName     = "/audio.BeatService/GetBeatParams"
+	BeatService_UploadBeat_FullMethodName    = "/audio.BeatService/UploadBeat"
+	BeatService_GetBeats_FullMethodName      = "/audio.BeatService/GetBeats"
+	BeatService_GetBeatParams_FullMethodName = "/audio.BeatService/GetBeatParams"
 )
 
 // BeatServiceClient is the client API for BeatService service.
@@ -31,9 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BeatServiceClient interface {
 	UploadBeat(ctx context.Context, in *UploadBeatRequest, opts ...grpc.CallOption) (*UploadBeatResponse, error)
-	GetBeat(ctx context.Context, in *GetBeatRequest, opts ...grpc.CallOption) (*GetBeatResponse, error)
-	GetRandomBeat(ctx context.Context, in *GetRandomBeatRequest, opts ...grpc.CallOption) (*GetRandomBeatResponse, error)
-	GetBeatmakerBeats(ctx context.Context, in *GetBeatmakerBeatsRequest, opts ...grpc.CallOption) (*GetBeatmakerBeatsResponse, error)
+	GetBeats(ctx context.Context, in *GetBeatsRequest, opts ...grpc.CallOption) (*GetBeatsResponse, error)
 	GetBeatParams(ctx context.Context, in *GetBeatParamsRequest, opts ...grpc.CallOption) (*GetBeatParamsResponse, error)
 }
 
@@ -55,30 +51,10 @@ func (c *beatServiceClient) UploadBeat(ctx context.Context, in *UploadBeatReques
 	return out, nil
 }
 
-func (c *beatServiceClient) GetBeat(ctx context.Context, in *GetBeatRequest, opts ...grpc.CallOption) (*GetBeatResponse, error) {
+func (c *beatServiceClient) GetBeats(ctx context.Context, in *GetBeatsRequest, opts ...grpc.CallOption) (*GetBeatsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetBeatResponse)
-	err := c.cc.Invoke(ctx, BeatService_GetBeat_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *beatServiceClient) GetRandomBeat(ctx context.Context, in *GetRandomBeatRequest, opts ...grpc.CallOption) (*GetRandomBeatResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetRandomBeatResponse)
-	err := c.cc.Invoke(ctx, BeatService_GetRandomBeat_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *beatServiceClient) GetBeatmakerBeats(ctx context.Context, in *GetBeatmakerBeatsRequest, opts ...grpc.CallOption) (*GetBeatmakerBeatsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetBeatmakerBeatsResponse)
-	err := c.cc.Invoke(ctx, BeatService_GetBeatmakerBeats_FullMethodName, in, out, cOpts...)
+	out := new(GetBeatsResponse)
+	err := c.cc.Invoke(ctx, BeatService_GetBeats_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,9 +76,7 @@ func (c *beatServiceClient) GetBeatParams(ctx context.Context, in *GetBeatParams
 // for forward compatibility.
 type BeatServiceServer interface {
 	UploadBeat(context.Context, *UploadBeatRequest) (*UploadBeatResponse, error)
-	GetBeat(context.Context, *GetBeatRequest) (*GetBeatResponse, error)
-	GetRandomBeat(context.Context, *GetRandomBeatRequest) (*GetRandomBeatResponse, error)
-	GetBeatmakerBeats(context.Context, *GetBeatmakerBeatsRequest) (*GetBeatmakerBeatsResponse, error)
+	GetBeats(context.Context, *GetBeatsRequest) (*GetBeatsResponse, error)
 	GetBeatParams(context.Context, *GetBeatParamsRequest) (*GetBeatParamsResponse, error)
 	mustEmbedUnimplementedBeatServiceServer()
 }
@@ -117,14 +91,8 @@ type UnimplementedBeatServiceServer struct{}
 func (UnimplementedBeatServiceServer) UploadBeat(context.Context, *UploadBeatRequest) (*UploadBeatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadBeat not implemented")
 }
-func (UnimplementedBeatServiceServer) GetBeat(context.Context, *GetBeatRequest) (*GetBeatResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBeat not implemented")
-}
-func (UnimplementedBeatServiceServer) GetRandomBeat(context.Context, *GetRandomBeatRequest) (*GetRandomBeatResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRandomBeat not implemented")
-}
-func (UnimplementedBeatServiceServer) GetBeatmakerBeats(context.Context, *GetBeatmakerBeatsRequest) (*GetBeatmakerBeatsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBeatmakerBeats not implemented")
+func (UnimplementedBeatServiceServer) GetBeats(context.Context, *GetBeatsRequest) (*GetBeatsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBeats not implemented")
 }
 func (UnimplementedBeatServiceServer) GetBeatParams(context.Context, *GetBeatParamsRequest) (*GetBeatParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBeatParams not implemented")
@@ -168,56 +136,20 @@ func _BeatService_UploadBeat_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BeatService_GetBeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetBeatRequest)
+func _BeatService_GetBeats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBeatsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BeatServiceServer).GetBeat(ctx, in)
+		return srv.(BeatServiceServer).GetBeats(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BeatService_GetBeat_FullMethodName,
+		FullMethod: BeatService_GetBeats_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeatServiceServer).GetBeat(ctx, req.(*GetBeatRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BeatService_GetRandomBeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRandomBeatRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BeatServiceServer).GetRandomBeat(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BeatService_GetRandomBeat_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeatServiceServer).GetRandomBeat(ctx, req.(*GetRandomBeatRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BeatService_GetBeatmakerBeats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetBeatmakerBeatsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BeatServiceServer).GetBeatmakerBeats(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BeatService_GetBeatmakerBeats_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeatServiceServer).GetBeatmakerBeats(ctx, req.(*GetBeatmakerBeatsRequest))
+		return srv.(BeatServiceServer).GetBeats(ctx, req.(*GetBeatsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -252,16 +184,8 @@ var BeatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BeatService_UploadBeat_Handler,
 		},
 		{
-			MethodName: "GetBeat",
-			Handler:    _BeatService_GetBeat_Handler,
-		},
-		{
-			MethodName: "GetRandomBeat",
-			Handler:    _BeatService_GetRandomBeat_Handler,
-		},
-		{
-			MethodName: "GetBeatmakerBeats",
-			Handler:    _BeatService_GetBeatmakerBeats_Handler,
+			MethodName: "GetBeats",
+			Handler:    _BeatService_GetBeats_Handler,
 		},
 		{
 			MethodName: "GetBeatParams",

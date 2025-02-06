@@ -15,14 +15,8 @@ service BeatService {
       body: "*"
     };
   }
-  rpc GetBeat(GetBeatRequest) returns (GetBeatResponse) {
-    option (google.api.http) = {get: "/v1/beat/{beat_id}"};
-  }
-  rpc GetRandomBeat(GetRandomBeatRequest) returns (GetRandomBeatResponse) {
-    option (google.api.http) = {get: "/v1/beat/random"};
-  }
-  rpc GetBeatmakerBeats(GetBeatmakerBeatsRequest) returns (GetBeatmakerBeatsResponse) {
-    option (google.api.http) = {get: "/v1/beatmaker/{beatmaker_id}/beats"};
+  rpc GetBeats(GetBeatsRequest) returns (GetBeatsResponse) {
+    option (google.api.http) = {get: "/v1/beats"};
   }
   rpc GetBeatParams(GetBeatParamsRequest) returns (GetBeatParamsResponse) {
     option (google.api.http) = {get: "/v1/beat/params"};
@@ -34,8 +28,8 @@ enum Scale {
   MAJOR = 1;
 }
 
-message UploadBeatNote {
-  int64 note_id = 1 [(buf.validate.field).int64.gt = 0];
+message Note {
+  string name = 1;
   Scale scale = 2;
 }
 
@@ -58,6 +52,12 @@ message UploadBeatRequest {
     expression: "this.beat_mood.all(m, m > 0)"
   };
 
+  option (buf.validate.message).cel = {
+    id: "note_name_not_empty"
+    message: "note name must be not empty"
+    expression: "this.note.name.size() > 0"
+  };
+
   int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
   int64 beatmaker_id = 2 [(buf.validate.field).int64.gt = 0];
   string name = 3 [(buf.validate.field).string = {
@@ -68,7 +68,7 @@ message UploadBeatRequest {
   repeated int64 beat_genre = 5;
   repeated int64 beat_tag = 6;
   repeated int64 beat_mood = 7;
-  UploadBeatNote note = 8;
+  Note note = 8;
   int64 bpm = 9 [(buf.validate.field).int64 = {
     gt: 9
     lte: 600
@@ -86,62 +86,17 @@ message Beatmaker {
   string pseudonym = 3;
 }
 
-message GetBeatNote {
-  string name = 1;
-  Scale scale = 2;
+enum Order {
+  ASC = 0;
+  DESC = 1;
 }
 
-message GetBeatRequest {
-  int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
+message OrderBy {
+  Order order = 1;
+  string field = 2;
 }
 
-message GetBeatResponse {
-  int64 id = 1;
-  string name = 2;
-  string description = 3;
-  Beatmaker beatmaker = 4;
-  repeated string beat_genre = 5;
-  repeated string beat_tag = 6;
-  repeated string beat_mood = 7;
-  GetBeatNote note = 8;
-  int64 bpm = 9;
-}
-
-message GetBeatParamsRequest {}
-
-message GetBeatParamsResponse {
-  repeated Genre genres = 1;
-  repeated Tag tags = 2;
-  repeated Mood moods = 3;
-  repeated Note notes = 4;
-}
-
-message Genre {
-  int64 genre_id = 1;
-  string name = 2;
-}
-
-message Tag {
-  int64 tag_id = 1;
-  string name = 2;
-}
-
-message Mood {
-  int64 mood_id = 1;
-  string name = 2;
-}
-
-message Note {
-  int64 note_id = 1;
-  string name = 2;
-}
-
-message GetRandomBeatNote {
-  string name = 1;
-  Scale scale = 2;
-}
-
-message GetRandomBeatRequest {
+message GetBeatsRequest {
   option (buf.validate.message).cel = {
     id: "genre_positive"
     message: "all genre ids must be positive"
@@ -166,13 +121,35 @@ message GetRandomBeatRequest {
     expression: "this.note.name.size() > 0"
   };
 
-  repeated string genre = 1;
-  repeated string mood = 2;
-  repeated string tag = 3;
-  GetRandomBeatNote note = 4;
+  option (buf.validate.message).cel = {
+    id: "order_by_field_not_empty"
+    message: "order by field must be not empty"
+    expression: "this.order_by.field.size() > 0"
+  };
+
+  optional int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
+  repeated string genre = 2;
+  repeated string mood = 3;
+  repeated string tag = 4;
+  optional Note note = 5;
+  optional int64 beatmaker_id = 6 [(buf.validate.field).int64.gt = 0];
+  optional string beat_name = 7 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 30
+  }];
+  optional int64 bpm = 8 [(buf.validate.field).int64 = {
+    gt: 9
+    lte: 600
+  }];
+  optional OrderBy order_by = 9;
+  optional int64 limit = 10 [(buf.validate.field).int64 = {
+    gt: 0
+    lte: 100
+  }];
+  optional int64 offset = 11 [(buf.validate.field).int64.gte = 0];
 }
 
-message GetRandomBeatResponse {
+message Beat {
   int64 beat_id = 1;
   Beatmaker beatmaker = 2;
   string image = 3;
@@ -181,15 +158,48 @@ message GetRandomBeatResponse {
   repeated string genre = 6;
   repeated string tag = 7;
   repeated string mood = 8;
-  GetRandomBeatNote note = 9;
+  Note note = 9;
   int64 bpm = 10;
   google.protobuf.Timestamp created_at = 11;
 }
 
-message GetBeatmakerBeatsRequest {
-  int64 beatmaker_id = 1 [(buf.validate.field).int64.gt = 0];
+message Pagination {
+  int64 pages = 1;
+  int64 cur_page = 2;
+  int64 records = 3;
+  int64 records_per_page = 4;
 }
 
-message GetBeatmakerBeatsResponse {
-  repeated GetBeatResponse beats = 1;
+message GetBeatsResponse {
+  Pagination pagination = 1;
+  repeated Beat beats = 2;
+}
+
+message GetBeatParamsRequest {}
+
+message GetBeatParamsResponse {
+  repeated GenreParam genres = 1;
+  repeated TagParam tags = 2;
+  repeated MoodParam moods = 3;
+  repeated NoteParam notes = 4;
+}
+
+message GenreParam {
+  int64 genre_id = 1;
+  string name = 2;
+}
+
+message TagParam {
+  int64 tag_id = 1;
+  string name = 2;
+}
+
+message MoodParam {
+  int64 mood_id = 1;
+  string name = 2;
+}
+
+message NoteParam {
+  int64 note_id = 1;
+  string name = 2;
 }
