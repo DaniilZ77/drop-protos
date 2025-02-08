@@ -150,6 +150,7 @@ message GetBeatsRequest {
     lte: 100
   }];
   optional int64 offset = 11 [(buf.validate.field).int64.gte = 0];
+  optional bool is_downloaded = 12;
 }
 
 message Beat {

@@ -192,6 +192,12 @@
             "required": false,
             "type": "string",
             "format": "int64"
+          },
+          {
+            "name": "isDownloaded",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "tags": [
