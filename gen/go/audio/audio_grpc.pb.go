@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	BeatService_UploadBeat_FullMethodName    = "/audio.BeatService/UploadBeat"
 	BeatService_GetBeats_FullMethodName      = "/audio.BeatService/GetBeats"
+	BeatService_UpdateBeat_FullMethodName    = "/audio.BeatService/UpdateBeat"
+	BeatService_DeleteBeat_FullMethodName    = "/audio.BeatService/DeleteBeat"
 	BeatService_GetBeatParams_FullMethodName = "/audio.BeatService/GetBeatParams"
 )
 
@@ -30,6 +32,8 @@ const (
 type BeatServiceClient interface {
 	UploadBeat(ctx context.Context, in *UploadBeatRequest, opts ...grpc.CallOption) (*UploadBeatResponse, error)
 	GetBeats(ctx context.Context, in *GetBeatsRequest, opts ...grpc.CallOption) (*GetBeatsResponse, error)
+	UpdateBeat(ctx context.Context, in *UpdateBeatRequest, opts ...grpc.CallOption) (*UpdateBeatResponse, error)
+	DeleteBeat(ctx context.Context, in *DeleteBeatRequest, opts ...grpc.CallOption) (*DeleteBeatResponse, error)
 	GetBeatParams(ctx context.Context, in *GetBeatParamsRequest, opts ...grpc.CallOption) (*GetBeatParamsResponse, error)
 }
 
@@ -61,6 +65,26 @@ func (c *beatServiceClient) GetBeats(ctx context.Context, in *GetBeatsRequest, o
 	return out, nil
 }
 
+func (c *beatServiceClient) UpdateBeat(ctx context.Context, in *UpdateBeatRequest, opts ...grpc.CallOption) (*UpdateBeatResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateBeatResponse)
+	err := c.cc.Invoke(ctx, BeatService_UpdateBeat_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *beatServiceClient) DeleteBeat(ctx context.Context, in *DeleteBeatRequest, opts ...grpc.CallOption) (*DeleteBeatResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteBeatResponse)
+	err := c.cc.Invoke(ctx, BeatService_DeleteBeat_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *beatServiceClient) GetBeatParams(ctx context.Context, in *GetBeatParamsRequest, opts ...grpc.CallOption) (*GetBeatParamsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetBeatParamsResponse)
@@ -77,6 +101,8 @@ func (c *beatServiceClient) GetBeatParams(ctx context.Context, in *GetBeatParams
 type BeatServiceServer interface {
 	UploadBeat(context.Context, *UploadBeatRequest) (*UploadBeatResponse, error)
 	GetBeats(context.Context, *GetBeatsRequest) (*GetBeatsResponse, error)
+	UpdateBeat(context.Context, *UpdateBeatRequest) (*UpdateBeatResponse, error)
+	DeleteBeat(context.Context, *DeleteBeatRequest) (*DeleteBeatResponse, error)
 	GetBeatParams(context.Context, *GetBeatParamsRequest) (*GetBeatParamsResponse, error)
 	mustEmbedUnimplementedBeatServiceServer()
 }
@@ -93,6 +119,12 @@ func (UnimplementedBeatServiceServer) UploadBeat(context.Context, *UploadBeatReq
 }
 func (UnimplementedBeatServiceServer) GetBeats(context.Context, *GetBeatsRequest) (*GetBeatsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBeats not implemented")
+}
+func (UnimplementedBeatServiceServer) UpdateBeat(context.Context, *UpdateBeatRequest) (*UpdateBeatResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBeat not implemented")
+}
+func (UnimplementedBeatServiceServer) DeleteBeat(context.Context, *DeleteBeatRequest) (*DeleteBeatResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBeat not implemented")
 }
 func (UnimplementedBeatServiceServer) GetBeatParams(context.Context, *GetBeatParamsRequest) (*GetBeatParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBeatParams not implemented")
@@ -154,6 +186,42 @@ func _BeatService_GetBeats_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BeatService_UpdateBeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBeatRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BeatServiceServer).UpdateBeat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BeatService_UpdateBeat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BeatServiceServer).UpdateBeat(ctx, req.(*UpdateBeatRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BeatService_DeleteBeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteBeatRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BeatServiceServer).DeleteBeat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BeatService_DeleteBeat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BeatServiceServer).DeleteBeat(ctx, req.(*DeleteBeatRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BeatService_GetBeatParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetBeatParamsRequest)
 	if err := dec(in); err != nil {
@@ -186,6 +254,14 @@ var BeatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBeats",
 			Handler:    _BeatService_GetBeats_Handler,
+		},
+		{
+			MethodName: "UpdateBeat",
+			Handler:    _BeatService_UpdateBeat_Handler,
+		},
+		{
+			MethodName: "DeleteBeat",
+			Handler:    _BeatService_DeleteBeat_Handler,
 		},
 		{
 			MethodName: "GetBeatParams",

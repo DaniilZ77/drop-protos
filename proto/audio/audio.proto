@@ -18,6 +18,15 @@ service BeatService {
   rpc GetBeats(GetBeatsRequest) returns (GetBeatsResponse) {
     option (google.api.http) = {get: "/v1/beats"};
   }
+  rpc UpdateBeat(UpdateBeatRequest) returns (UpdateBeatResponse) {
+    option (google.api.http) = {
+      patch: "/v1/beat/{beat_id}"
+      body: "*"
+    };
+  }
+  rpc DeleteBeat(DeleteBeatRequest) returns (DeleteBeatResponse) {
+    option (google.api.http) = {delete: "/v1/beat/{beat_id}"};
+  }
   rpc GetBeatParams(GetBeatParamsRequest) returns (GetBeatParamsResponse) {
     option (google.api.http) = {get: "/v1/beat/params"};
   }
@@ -206,4 +215,58 @@ message MoodParam {
 message NoteParam {
   int64 note_id = 1;
   string name = 2;
+}
+
+message UpdateBeatNote {
+  int64 note_id = 1 [(buf.validate.field).int64.gt = 0];
+  Scale scale = 2;
+}
+
+message UpdateBeatRequest {
+  int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
+  optional int64 beatmaker_id = 2 [(buf.validate.field).int64.gt = 0];
+  optional string name = 3 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 30
+  }];
+  optional string description = 4 [(buf.validate.field).string.max_len = 500];
+  repeated int64 beat_genre = 5 [(buf.validate.field).repeated = {
+    unique: true
+    max_items: 20
+    items: {
+      int64: {gt: 0}
+    }
+  }];
+  repeated int64 beat_tag = 6 [(buf.validate.field).repeated = {
+    unique: true
+    max_items: 20
+    items: {
+      int64: {gt: 0}
+    }
+  }];
+  repeated int64 beat_mood = 7 [(buf.validate.field).repeated = {
+    unique: true
+    max_items: 20
+    items: {
+      int64: {gt: 0}
+    }
+  }];
+  optional UpdateBeatNote note = 8;
+  optional int64 bpm = 9 [(buf.validate.field).int64 = {
+    gt: 9
+    lte: 600
+  }];
+  optional bool update_image = 10;
+  optional bool update_file = 11;
+}
+
+message DeleteBeatRequest {
+  int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
+}
+
+message DeleteBeatResponse {}
+
+message UpdateBeatResponse {
+  optional string file_upload_url = 1;
+  optional string image_upload_url = 2;
 }

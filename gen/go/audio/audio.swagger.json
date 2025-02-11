@@ -70,6 +70,74 @@
         ]
       }
     },
+    "/v1/beat/{beatId}": {
+      "delete": {
+        "operationId": "BeatService_DeleteBeat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audioDeleteBeatResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "beatId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "BeatService"
+        ]
+      },
+      "patch": {
+        "operationId": "BeatService_UpdateBeat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audioUpdateBeatResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "beatId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BeatServiceUpdateBeatBody"
+            }
+          }
+        ],
+        "tags": [
+          "BeatService"
+        ]
+      }
+    },
     "/v1/beats": {
       "get": {
         "operationId": "BeatService_GetBeats",
@@ -207,6 +275,55 @@
     }
   },
   "definitions": {
+    "BeatServiceUpdateBeatBody": {
+      "type": "object",
+      "properties": {
+        "beatmakerId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "beatGenre": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "beatTag": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "beatMood": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        },
+        "note": {
+          "$ref": "#/definitions/audioUpdateBeatNote"
+        },
+        "bpm": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateImage": {
+          "type": "boolean"
+        },
+        "updateFile": {
+          "type": "boolean"
+        }
+      }
+    },
     "audioBeat": {
       "type": "object",
       "properties": {
@@ -271,6 +388,9 @@
           "type": "string"
         }
       }
+    },
+    "audioDeleteBeatResponse": {
+      "type": "object"
     },
     "audioGenreParam": {
       "type": "object",
@@ -423,6 +543,29 @@
           "format": "int64"
         },
         "name": {
+          "type": "string"
+        }
+      }
+    },
+    "audioUpdateBeatNote": {
+      "type": "object",
+      "properties": {
+        "noteId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "scale": {
+          "$ref": "#/definitions/audioScale"
+        }
+      }
+    },
+    "audioUpdateBeatResponse": {
+      "type": "object",
+      "properties": {
+        "fileUploadUrl": {
+          "type": "string"
+        },
+        "imageUploadUrl": {
           "type": "string"
         }
       }
