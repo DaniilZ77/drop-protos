@@ -224,40 +224,39 @@ message UpdateBeatNote {
 
 message UpdateBeatRequest {
   int64 beat_id = 1 [(buf.validate.field).int64.gt = 0];
-  optional int64 beatmaker_id = 2 [(buf.validate.field).int64.gt = 0];
-  optional string name = 3 [(buf.validate.field).string = {
+  optional string name = 2 [(buf.validate.field).string = {
     min_len: 1
     max_len: 30
   }];
-  optional string description = 4 [(buf.validate.field).string.max_len = 500];
-  repeated int64 beat_genre = 5 [(buf.validate.field).repeated = {
+  optional string description = 3 [(buf.validate.field).string.max_len = 500];
+  repeated int64 beat_genre = 4 [(buf.validate.field).repeated = {
     unique: true
     max_items: 20
     items: {
       int64: {gt: 0}
     }
   }];
-  repeated int64 beat_tag = 6 [(buf.validate.field).repeated = {
+  repeated int64 beat_tag = 5 [(buf.validate.field).repeated = {
     unique: true
     max_items: 20
     items: {
       int64: {gt: 0}
     }
   }];
-  repeated int64 beat_mood = 7 [(buf.validate.field).repeated = {
+  repeated int64 beat_mood = 6 [(buf.validate.field).repeated = {
     unique: true
     max_items: 20
     items: {
       int64: {gt: 0}
     }
   }];
-  optional UpdateBeatNote note = 8;
-  optional int64 bpm = 9 [(buf.validate.field).int64 = {
+  optional UpdateBeatNote note = 7;
+  optional int64 bpm = 8 [(buf.validate.field).int64 = {
     gt: 9
     lte: 600
   }];
-  optional bool update_image = 10;
-  optional bool update_file = 11;
+  optional bool update_image = 9;
+  optional bool update_file = 10;
 }
 
 message DeleteBeatRequest {

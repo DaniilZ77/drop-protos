@@ -278,10 +278,6 @@
     "BeatServiceUpdateBeatBody": {
       "type": "object",
       "properties": {
-        "beatmakerId": {
-          "type": "string",
-          "format": "int64"
-        },
         "name": {
           "type": "string"
         },
