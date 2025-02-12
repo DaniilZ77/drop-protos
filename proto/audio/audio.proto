@@ -154,11 +154,11 @@ message GetBeatsRequest {
     lte: 600
   }];
   optional OrderBy order_by = 9;
-  optional int64 limit = 10 [(buf.validate.field).int64 = {
+  int64 limit = 10 [(buf.validate.field).int64 = {
     gt: 0
     lte: 100
   }];
-  optional int64 offset = 11 [(buf.validate.field).int64.gte = 0];
+  int64 offset = 11 [(buf.validate.field).int64.gte = 0];
   optional bool is_downloaded = 12;
 }
 
