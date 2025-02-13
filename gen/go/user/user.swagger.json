@@ -132,36 +132,6 @@
         ]
       }
     },
-    "/v1/user/{userId}": {
-      "get": {
-        "operationId": "UserService_GetUser",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userGetUserResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "UserService"
-        ]
-      }
-    },
     "/v1/users": {
       "get": {
         "operationId": "UserService_GetUsers",
