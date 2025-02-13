@@ -81,26 +81,6 @@
       }
     },
     "/v1/user": {
-      "delete": {
-        "operationId": "UserService_DeleteUser",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userDeleteUserResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "UserService"
-        ]
-      },
       "patch": {
         "operationId": "UserService_UpdateUser",
         "responses": {
@@ -246,9 +226,6 @@
           }
         }
       }
-    },
-    "userDeleteUserResponse": {
-      "type": "object"
     },
     "userGetUserResponse": {
       "type": "object",

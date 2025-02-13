@@ -30,9 +30,6 @@ service UserService {
   rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
     option (google.api.http) = {get: "/v1/users"};
   }
-  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
-    option (google.api.http) = {delete: "/v1/user"};
-  }
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
 }
 
