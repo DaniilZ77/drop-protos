@@ -33,6 +33,9 @@ service UserService {
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
     option (google.api.http) = {delete: "/v1/user"};
   }
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {get: "/v1/user/{user_id}"};
+  }
 }
 
 message LoginRequest {
@@ -143,3 +146,16 @@ message GetUsersResponse {
 message DeleteUserRequest {}
 
 message DeleteUserResponse {}
+
+message GetUserRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message GetUserResponse {
+  string user_id = 1;
+  string username = 2;
+  string pseudonym = 3;
+  string first_name = 4;
+  string last_name = 5;
+  google.protobuf.Timestamp created_at = 9;
+}

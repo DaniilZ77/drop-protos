@@ -1,4 +1,4 @@
-SERVICE_NAME=audio
+SERVICE_NAME=user
 
 # Proto generator for Go
 gen-go:
