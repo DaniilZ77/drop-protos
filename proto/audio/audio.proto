@@ -43,35 +43,36 @@ message UploadBeatNote {
 }
 
 message UploadBeatRequest {
-  string beatmaker_id = 1 [(buf.validate.field).string.uuid = true];
-  string name = 2 [(buf.validate.field).string = {
+  string beat_id = 1 [(buf.validate.field).string.uuid = true];
+  string beatmaker_id = 2 [(buf.validate.field).string.uuid = true];
+  string name = 3 [(buf.validate.field).string = {
     min_len: 1
     max_len: 30
   }];
-  string description = 3 [(buf.validate.field).string.max_len = 500];
-  repeated string beat_genre = 4 [(buf.validate.field).repeated = {
+  string description = 4 [(buf.validate.field).string.max_len = 500];
+  repeated string beat_genre = 5 [(buf.validate.field).repeated = {
     unique: true
     max_items: 20
     items: {
       string: {uuid: true}
     }
   }];
-  repeated string beat_tag = 5 [(buf.validate.field).repeated = {
+  repeated string beat_tag = 6 [(buf.validate.field).repeated = {
     unique: true
     max_items: 20
     items: {
       string: {uuid: true}
     }
   }];
-  repeated string beat_mood = 6 [(buf.validate.field).repeated = {
+  repeated string beat_mood = 7 [(buf.validate.field).repeated = {
     unique: true
     max_items: 20
     items: {
       string: {uuid: true}
     }
   }];
-  UploadBeatNote note = 7;
-  int64 bpm = 8 [(buf.validate.field).int64 = {
+  UploadBeatNote note = 8;
+  int64 bpm = 9 [(buf.validate.field).int64 = {
     gt: 9
     lte: 600
   }];
