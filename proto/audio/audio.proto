@@ -42,6 +42,17 @@ message UploadBeatNote {
   Scale scale = 2;
 }
 
+message Range {
+  option (buf.validate.message).cel = {
+    id: "start_le_end"
+    message: "start must be less than or equal end"
+    expression: "this.start <= this.end && this.start >= 0"
+  };
+
+  int64 start = 1;
+  int64 end = 2;
+}
+
 message UploadBeatRequest {
   string beat_id = 1 [(buf.validate.field).string.uuid = true];
   string beatmaker_id = 2 [(buf.validate.field).string.uuid = true];
@@ -76,6 +87,7 @@ message UploadBeatRequest {
     gt: 9
     lte: 600
   }];
+  Range range = 10;
 }
 
 message UploadBeatResponse {
@@ -173,7 +185,8 @@ message Beat {
   repeated string mood = 8;
   GetBeatsNote note = 9;
   int64 bpm = 10;
-  google.protobuf.Timestamp created_at = 11;
+  Range range = 11;
+  google.protobuf.Timestamp created_at = 12;
 }
 
 message Pagination {
@@ -257,6 +270,7 @@ message UpdateBeatRequest {
   }];
   optional bool update_image = 9;
   optional bool update_file = 10;
+  optional Range range = 11;
 }
 
 message DeleteBeatRequest {

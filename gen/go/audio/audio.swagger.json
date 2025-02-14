@@ -310,6 +310,9 @@
         },
         "updateFile": {
           "type": "boolean"
+        },
+        "range": {
+          "$ref": "#/definitions/audioRange"
         }
       }
     },
@@ -355,6 +358,9 @@
         "bpm": {
           "type": "string",
           "format": "int64"
+        },
+        "range": {
+          "$ref": "#/definitions/audioRange"
         },
         "createdAt": {
           "type": "string",
@@ -511,6 +517,19 @@
         }
       }
     },
+    "audioRange": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "int64"
+        },
+        "end": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
     "audioScale": {
       "type": "string",
       "enum": [
@@ -602,6 +621,9 @@
         "bpm": {
           "type": "string",
           "format": "int64"
+        },
+        "range": {
+          "$ref": "#/definitions/audioRange"
         }
       }
     },
