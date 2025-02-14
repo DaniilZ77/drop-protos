@@ -93,6 +93,7 @@ message UploadBeatRequest {
 message UploadBeatResponse {
   string file_upload_url = 1;
   string image_upload_url = 2;
+  string archive_upload_url = 3;
 }
 
 message Beatmaker {
@@ -270,7 +271,8 @@ message UpdateBeatRequest {
   }];
   optional bool update_image = 9;
   optional bool update_file = 10;
-  optional Range range = 11;
+  optional bool update_archive = 11;
+  optional Range range = 12;
 }
 
 message DeleteBeatRequest {
@@ -282,4 +284,5 @@ message DeleteBeatResponse {}
 message UpdateBeatResponse {
   optional string file_upload_url = 1;
   optional string image_upload_url = 2;
+  optional string archive_upload_url = 3;
 }

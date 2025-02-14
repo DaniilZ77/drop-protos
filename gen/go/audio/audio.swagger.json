@@ -311,6 +311,9 @@
         "updateFile": {
           "type": "boolean"
         },
+        "updateArchive": {
+          "type": "boolean"
+        },
         "range": {
           "$ref": "#/definitions/audioRange"
         }
@@ -568,6 +571,9 @@
         },
         "imageUploadUrl": {
           "type": "string"
+        },
+        "archiveUploadUrl": {
+          "type": "string"
         }
       }
     },
@@ -634,6 +640,9 @@
           "type": "string"
         },
         "imageUploadUrl": {
+          "type": "string"
+        },
+        "archiveUploadUrl": {
           "type": "string"
         }
       }
