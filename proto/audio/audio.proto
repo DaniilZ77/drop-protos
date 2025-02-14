@@ -82,12 +82,12 @@ message UploadBeatRequest {
       string: {uuid: true}
     }
   }];
-  UploadBeatNote note = 8;
+  UploadBeatNote note = 8 [(buf.validate.field).required = true];
   int64 bpm = 9 [(buf.validate.field).int64 = {
     gt: 9
     lte: 600
   }];
-  Range range = 10;
+  Range range = 10 [(buf.validate.field).required = true];
 }
 
 message UploadBeatResponse {
