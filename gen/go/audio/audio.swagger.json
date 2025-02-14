@@ -566,9 +566,6 @@
     "audioUploadBeatRequest": {
       "type": "object",
       "properties": {
-        "beatId": {
-          "type": "string"
-        },
         "beatmakerId": {
           "type": "string"
         },
