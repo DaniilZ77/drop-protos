@@ -20,15 +20,21 @@ service BeatService {
   }
   rpc UpdateBeat(UpdateBeatRequest) returns (UpdateBeatResponse) {
     option (google.api.http) = {
-      patch: "/v1/beat/{beat_id}"
+      patch: "/v1/beats/{beat_id}"
       body: "*"
     };
   }
   rpc DeleteBeat(DeleteBeatRequest) returns (DeleteBeatResponse) {
-    option (google.api.http) = {delete: "/v1/beat/{beat_id}"};
+    option (google.api.http) = {delete: "/v1/beats/{beat_id}"};
   }
   rpc GetBeatParams(GetBeatParamsRequest) returns (GetBeatParamsResponse) {
     option (google.api.http) = {get: "/v1/beat/params"};
+  }
+  rpc AcquireBeat(AcquireBeatRequest) returns (AcquireBeatResponse) {
+    option (google.api.http) = {
+      post: "/v1/beats/{beat_id}/acquire"
+      body: "*"
+    };
   }
 }
 
@@ -288,4 +294,13 @@ message UpdateBeatResponse {
   optional string file_upload_url = 1;
   optional string image_upload_url = 2;
   optional string archive_upload_url = 3;
+}
+
+message AcquireBeatRequest {
+  string beat_id = 1 [(buf.validate.field).string.uuid = true];
+  string user_id = 2 [(buf.validate.field).string.uuid = true];
+}
+
+message AcquireBeatResponse {
+  string archive = 1;
 }

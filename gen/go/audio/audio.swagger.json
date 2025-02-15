@@ -70,72 +70,6 @@
         ]
       }
     },
-    "/v1/beat/{beatId}": {
-      "delete": {
-        "operationId": "BeatService_DeleteBeat",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/audioDeleteBeatResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "beatId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "BeatService"
-        ]
-      },
-      "patch": {
-        "operationId": "BeatService_UpdateBeat",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/audioUpdateBeatResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "beatId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/BeatServiceUpdateBeatBody"
-            }
-          }
-        ],
-        "tags": [
-          "BeatService"
-        ]
-      }
-    },
     "/v1/beats": {
       "get": {
         "operationId": "BeatService_GetBeats",
@@ -268,9 +202,121 @@
           "BeatService"
         ]
       }
+    },
+    "/v1/beats/{beatId}": {
+      "delete": {
+        "operationId": "BeatService_DeleteBeat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audioDeleteBeatResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "beatId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "BeatService"
+        ]
+      },
+      "patch": {
+        "operationId": "BeatService_UpdateBeat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audioUpdateBeatResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "beatId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BeatServiceUpdateBeatBody"
+            }
+          }
+        ],
+        "tags": [
+          "BeatService"
+        ]
+      }
+    },
+    "/v1/beats/{beatId}/acquire": {
+      "post": {
+        "operationId": "BeatService_AcquireBeat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/audioAcquireBeatResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "beatId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BeatServiceAcquireBeatBody"
+            }
+          }
+        ],
+        "tags": [
+          "BeatService"
+        ]
+      }
     }
   },
   "definitions": {
+    "BeatServiceAcquireBeatBody": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
     "BeatServiceUpdateBeatBody": {
       "type": "object",
       "properties": {
@@ -316,6 +362,14 @@
         },
         "range": {
           "$ref": "#/definitions/audioRange"
+        }
+      }
+    },
+    "audioAcquireBeatResponse": {
+      "type": "object",
+      "properties": {
+        "archive": {
+          "type": "string"
         }
       }
     },
