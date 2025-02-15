@@ -31,6 +31,21 @@ service UserService {
     option (google.api.http) = {get: "/v1/users"};
   }
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+  rpc InitAdmin(InitAdminRequest) returns (InitAdminResponse) {
+    option (google.api.http) = {
+      post: "/v1/admin/init"
+      body: "*"
+    };
+  }
+  rpc AddAdmin(AddAdminRequest) returns (AddAdminResponse) {
+    option (google.api.http) = {
+      post: "/v1/admin"
+      body: "*"
+    };
+  }
+  rpc DeleteAdmin(DeleteAdminRequest) returns (DeleteAdminResponse) {
+    option (google.api.http) = {delete: "/v1/admins/{user_id}"};
+  }
 }
 
 message LoginRequest {
@@ -154,3 +169,21 @@ message GetUserResponse {
   string last_name = 5;
   google.protobuf.Timestamp created_at = 9;
 }
+
+message InitAdminRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message InitAdminResponse {}
+
+message AddAdminRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message AddAdminResponse {}
+
+message DeleteAdminRequest {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteAdminResponse {}
