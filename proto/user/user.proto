@@ -44,7 +44,7 @@ service UserService {
     };
   }
   rpc DeleteAdmin(DeleteAdminRequest) returns (DeleteAdminResponse) {
-    option (google.api.http) = {delete: "/v1/admins/{user_id}"};
+    option (google.api.http) = {delete: "/v1/admin"};
   }
 }
 
@@ -171,19 +171,28 @@ message GetUserResponse {
 }
 
 message InitAdminRequest {
-  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 30
+  }];
 }
 
 message InitAdminResponse {}
 
 message AddAdminRequest {
-  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 30
+  }];
 }
 
 message AddAdminResponse {}
 
 message DeleteAdminRequest {
-  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 1
+    max_len: 30
+  }];
 }
 
 message DeleteAdminResponse {}

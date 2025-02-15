@@ -17,6 +17,34 @@
   ],
   "paths": {
     "/v1/admin": {
+      "delete": {
+        "operationId": "UserService_DeleteAdmin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userDeleteAdminResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      },
       "post": {
         "operationId": "UserService_AddAdmin",
         "responses": {
@@ -73,36 +101,6 @@
             "schema": {
               "$ref": "#/definitions/userInitAdminRequest"
             }
-          }
-        ],
-        "tags": [
-          "UserService"
-        ]
-      }
-    },
-    "/v1/admins/{userId}": {
-      "delete": {
-        "operationId": "UserService_DeleteAdmin",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userDeleteAdminResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "tags": [
@@ -324,7 +322,7 @@
     "userAddAdminRequest": {
       "type": "object",
       "properties": {
-        "userId": {
+        "username": {
           "type": "string"
         }
       }
@@ -377,7 +375,7 @@
     "userInitAdminRequest": {
       "type": "object",
       "properties": {
-        "userId": {
+        "username": {
           "type": "string"
         }
       }
