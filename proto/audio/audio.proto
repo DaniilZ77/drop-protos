@@ -184,7 +184,7 @@ message GetBeatsRequest {
 message Beat {
   string beat_id = 1;
   Beatmaker beatmaker = 2;
-  string image = 3;
+  string image_download_url = 3;
   string name = 4;
   string description = 5;
   repeated string genre = 6;
@@ -302,5 +302,5 @@ message AcquireBeatRequest {
 }
 
 message AcquireBeatResponse {
-  string archive = 1;
+  string archive_download_url = 1;
 }

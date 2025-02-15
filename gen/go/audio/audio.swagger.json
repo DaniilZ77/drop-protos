@@ -368,7 +368,7 @@
     "audioAcquireBeatResponse": {
       "type": "object",
       "properties": {
-        "archive": {
+        "archiveDownloadUrl": {
           "type": "string"
         }
       }
@@ -382,7 +382,7 @@
         "beatmaker": {
           "$ref": "#/definitions/audioBeatmaker"
         },
-        "image": {
+        "imageDownloadUrl": {
           "type": "string"
         },
         "name": {
