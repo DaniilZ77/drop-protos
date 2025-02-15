@@ -187,7 +187,10 @@ message Beat {
   GetBeatsNote note = 9;
   int64 bpm = 10;
   Range range = 11;
-  google.protobuf.Timestamp created_at = 12;
+  bool is_file_uploaded = 12;
+  bool is_image_uploaded = 13;
+  bool is_archive_uploaded = 14;
+  google.protobuf.Timestamp created_at = 15;
 }
 
 message Pagination {

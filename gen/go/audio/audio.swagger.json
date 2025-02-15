@@ -365,6 +365,15 @@
         "range": {
           "$ref": "#/definitions/audioRange"
         },
+        "isFileUploaded": {
+          "type": "boolean"
+        },
+        "isImageUploaded": {
+          "type": "boolean"
+        },
+        "isArchiveUploaded": {
+          "type": "boolean"
+        },
         "createdAt": {
           "type": "string",
           "format": "date-time"
