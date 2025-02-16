@@ -36,6 +36,9 @@ service BeatService {
       body: "*"
     };
   }
+  rpc Health(HealthRequest) returns (HealthResponse) {
+    option (google.api.http) = {get: "/health"};
+  }
 }
 
 enum Scale {
@@ -304,3 +307,6 @@ message AcquireBeatRequest {
 message AcquireBeatResponse {
   string archive_download_url = 1;
 }
+
+message HealthRequest {}
+message HealthResponse {}

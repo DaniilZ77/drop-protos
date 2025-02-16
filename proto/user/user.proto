@@ -46,6 +46,9 @@ service UserService {
   rpc DeleteAdmin(DeleteAdminRequest) returns (DeleteAdminResponse) {
     option (google.api.http) = {delete: "/v1/admin"};
   }
+  rpc Health(HealthRequest) returns (HealthResponse) {
+    option (google.api.http) = {get: "/health"};
+  }
 }
 
 message LoginRequest {
@@ -196,3 +199,6 @@ message DeleteAdminRequest {
 }
 
 message DeleteAdminResponse {}
+
+message HealthRequest {}
+message HealthResponse {}
