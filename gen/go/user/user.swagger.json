@@ -395,7 +395,12 @@
       }
     },
     "userHealthResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
     },
     "userInitAdminRequest": {
       "type": "object",

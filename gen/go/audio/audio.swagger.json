@@ -544,7 +544,12 @@
       }
     },
     "audioHealthResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
     },
     "audioMoodParam": {
       "type": "object",

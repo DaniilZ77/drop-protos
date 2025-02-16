@@ -201,4 +201,6 @@ message DeleteAdminRequest {
 message DeleteAdminResponse {}
 
 message HealthRequest {}
-message HealthResponse {}
+message HealthResponse {
+  string message = 1;
+}
