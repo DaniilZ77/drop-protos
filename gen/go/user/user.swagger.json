@@ -480,22 +480,7 @@
       }
     },
     "userDeleteAdminResponse": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "adminScale": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        }
-      }
+      "type": "object"
     },
     "userGetAdminsResponse": {
       "type": "object",
@@ -568,7 +553,22 @@
       }
     },
     "userInitAdminResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "adminScale": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
     },
     "userLoginRequest": {
       "type": "object",
