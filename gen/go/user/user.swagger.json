@@ -469,19 +469,19 @@
       "properties": {
         "pages": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "curPage": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "records": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "recordsPerPage": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         }
       }
     },
