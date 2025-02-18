@@ -191,11 +191,11 @@ message GetUsersRequest {
     max_len: 50
   }];
   optional OrderBy order_by = 6;
-  uint64 limit = 7 [(buf.validate.field).int64 = {
+  uint64 limit = 7 [(buf.validate.field).uint64 = {
     gt: 0
     lte: 100
   }];
-  uint64 offset = 8 [(buf.validate.field).int64.gte = 0];
+  uint64 offset = 8;
 }
 
 message Pagination {
