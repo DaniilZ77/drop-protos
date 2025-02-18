@@ -259,13 +259,23 @@ message AddAdminRequest {
   }];
 }
 
-message AddAdminResponse {}
+message AddAdminResponse {
+  string user_id = 1;
+  string username = 2;
+  string admin_scale = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
 
 message DeleteAdminRequest {
   string user_id = 1 [(buf.validate.field).string.uuid = true];
 }
 
-message DeleteAdminResponse {}
+message DeleteAdminResponse {
+  string user_id = 1;
+  string username = 2;
+  string admin_scale = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
 
 message HealthRequest {}
 message HealthResponse {
