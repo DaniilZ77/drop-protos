@@ -4,15 +4,54 @@ package user;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "protovalidate/validate.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;userv1";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Drop Auth Service"
+    version: "1.0"
+  }
+  schemes: HTTP
+  host: "localhost:8080"
+  consumes: "application/json"
+  produces: "application/json"
+  security_definitions: {
+    security: {
+      key: "BearerAuth"
+      value: {
+        type: TYPE_API_KEY
+        description: "Format: `bearer <token>`"
+        in: IN_HEADER
+        name: "Authorization"
+      }
+    }
+    security: {
+      key: "TmaAuth"
+      value: {
+        type: TYPE_API_KEY
+        description: "Format: `tma <token>`"
+        in: IN_HEADER
+        name: "Authorization"
+      }
+    }
+  }
+};
 
 service UserService {
   rpc Login(LoginRequest) returns (LoginResponse) {
     option (google.api.http) = {
       post: "/v1/auth/login"
       body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "TmaAuth"
+          value: {}
+        }
+      }
     };
   }
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
@@ -25,6 +64,14 @@ service UserService {
     option (google.api.http) = {
       patch: "/v1/user"
       body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
     };
   }
   rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
@@ -42,9 +89,25 @@ service UserService {
       post: "/v1/admin"
       body: "*"
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
+    };
   }
   rpc DeleteAdmin(DeleteAdminRequest) returns (DeleteAdminResponse) {
-    option (google.api.http) = {delete: "/v1/admin"};
+    option (google.api.http) = {delete: "/v1/admin/{user_id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
+    };
   }
   rpc Health(HealthRequest) returns (HealthResponse) {
     option (google.api.http) = {get: "/health"};
@@ -96,16 +159,16 @@ message UpdateUserResponse {
   google.protobuf.Timestamp created_at = 9;
 }
 
-enum Order {
-  ASC = 0;
-  DESC = 1;
-}
-
 message OrderBy {
-  Order order = 1;
-  string field = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  string order = 1 [(buf.validate.field).cel = {
+    id: "order_by_order_must_be_valid"
+    message: "the order must be one of asc or desc"
+    expression: "this in ['asc', 'desc']"
+  }];
+  string field = 2 [(buf.validate.field).cel = {
+    id: "order_by_field_must_be_valid"
+    message: "the field must be one of username, pseudonym, first_name, last_name or created_at"
+    expression: "this in ['username', 'pseudonym', 'first_name', 'last_name', 'created_at']"
   }];
 }
 
@@ -128,11 +191,11 @@ message GetUsersRequest {
     max_len: 50
   }];
   optional OrderBy order_by = 6;
-  int64 limit = 7 [(buf.validate.field).int64 = {
+  uint64 limit = 7 [(buf.validate.field).int64 = {
     gt: 0
     lte: 100
   }];
-  int64 offset = 8 [(buf.validate.field).int64.gte = 0];
+  uint64 offset = 8 [(buf.validate.field).int64.gte = 0];
 }
 
 message Pagination {
@@ -155,10 +218,6 @@ message GetUsersResponse {
   Pagination pagination = 1;
   repeated User users = 2;
 }
-
-message DeleteUserRequest {}
-
-message DeleteUserResponse {}
 
 message GetUserRequest {
   string user_id = 1 [(buf.validate.field).string.uuid = true];
@@ -192,10 +251,7 @@ message AddAdminRequest {
 message AddAdminResponse {}
 
 message DeleteAdminRequest {
-  string username = 1 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 30
-  }];
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
 }
 
 message DeleteAdminResponse {}
