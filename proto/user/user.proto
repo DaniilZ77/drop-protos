@@ -199,10 +199,10 @@ message GetUsersRequest {
 }
 
 message Pagination {
-  int64 pages = 1;
-  int64 cur_page = 2;
-  int64 records = 3;
-  int64 records_per_page = 4;
+  uint64 pages = 1;
+  uint64 cur_page = 2;
+  uint64 records = 3;
+  uint64 records_per_page = 4;
 }
 
 message User {
