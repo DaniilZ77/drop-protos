@@ -282,19 +282,6 @@ message HealthResponse {
   string message = 1;
 }
 
-message OrderByAdmins {
-  string order = 1 [(buf.validate.field).cel = {
-    id: "order_by_order_must_be_valid"
-    message: "the order must be one of asc or desc"
-    expression: "this in ['asc', 'desc']"
-  }];
-  string field = 2 [(buf.validate.field).cel = {
-    id: "order_by_field_must_be_valid"
-    message: "the field must be one of username or created_at"
-    expression: "this in ['username', 'created_at']"
-  }];
-}
-
 message GetAdminsRequest {
   optional string user_id = 1 [(buf.validate.field).string.uuid = true];
   optional string username = 2 [(buf.validate.field).string = {
@@ -306,7 +293,6 @@ message GetAdminsRequest {
     message: "admin scale must be one of minor or major"
     expression: "this in ['minor', 'major']"
   }];
-  optional OrderByAdmins order_by = 4;
   uint64 limit = 7 [(buf.validate.field).uint64 = {
     gt: 0
     lte: 100
