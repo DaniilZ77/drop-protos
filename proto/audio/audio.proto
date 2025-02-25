@@ -117,10 +117,15 @@ enum Order {
 }
 
 message OrderBy {
-  Order order = 1;
-  string field = 2 [(buf.validate.field).string = {
-    min_len: 1
-    max_len: 100
+  string order = 1 [(buf.validate.field).cel = {
+    id: "order_by_order_must_be_valid"
+    message: "the order must be one of asc or desc"
+    expression: "this in ['asc', 'desc']"
+  }];
+  string field = 2 [(buf.validate.field).cel = {
+    id: "order_by_field_must_be_valid"
+    message: "the field must be one of name, created_at or bpm"
+    expression: "this in ['name', 'created_at', 'bpm']"
   }];
 }
 

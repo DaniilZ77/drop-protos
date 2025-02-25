@@ -186,12 +186,7 @@
             "name": "orderBy.order",
             "in": "query",
             "required": false,
-            "type": "string",
-            "enum": [
-              "ASC",
-              "DESC"
-            ],
-            "default": "ASC"
+            "type": "string"
           },
           {
             "name": "orderBy.field",
@@ -573,19 +568,11 @@
         }
       }
     },
-    "audioOrder": {
-      "type": "string",
-      "enum": [
-        "ASC",
-        "DESC"
-      ],
-      "default": "ASC"
-    },
     "audioOrderBy": {
       "type": "object",
       "properties": {
         "order": {
-          "$ref": "#/definitions/audioOrder"
+          "type": "string"
         },
         "field": {
           "type": "string"
