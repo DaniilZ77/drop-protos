@@ -4,15 +4,45 @@ package audio;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "protovalidate/validate.proto";
 
 option go_package = "github.com/MAXXXIMUS-tropical-milkshake/beatflow-protos;audiov1";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Drop Beats Service"
+    version: "1.0"
+  }
+  schemes: HTTP
+  host: "localhost:8081"
+  consumes: "application/json"
+  produces: "application/json"
+  security_definitions: {
+    security: {
+      key: "BearerAuth"
+      value: {
+        type: TYPE_API_KEY
+        description: "Format: `bearer <token>`"
+        in: IN_HEADER
+        name: "Authorization"
+      }
+    }
+  }
+};
 
 service BeatService {
   rpc UploadBeat(UploadBeatRequest) returns (UploadBeatResponse) {
     option (google.api.http) = {
       post: "/v1/beat"
       body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
     };
   }
   rpc GetBeats(GetBeatsRequest) returns (GetBeatsResponse) {
@@ -23,9 +53,25 @@ service BeatService {
       patch: "/v1/beats/{beat_id}"
       body: "*"
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
+    };
   }
   rpc DeleteBeat(DeleteBeatRequest) returns (DeleteBeatResponse) {
     option (google.api.http) = {delete: "/v1/beats/{beat_id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
+    };
   }
   rpc GetBeatParams(GetBeatParamsRequest) returns (GetBeatParamsResponse) {
     option (google.api.http) = {get: "/v1/beat/params"};
@@ -35,20 +81,27 @@ service BeatService {
       post: "/v1/beats/{beat_id}/acquire"
       body: "*"
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      security: {
+        security_requirement: {
+          key: "BearerAuth"
+          value: {}
+        }
+      }
+    };
   }
   rpc Health(HealthRequest) returns (HealthResponse) {
     option (google.api.http) = {get: "/health"};
   }
 }
 
-enum Scale {
-  MINOR = 0;
-  MAJOR = 1;
-}
-
 message UploadBeatNote {
   string note_id = 1 [(buf.validate.field).string.uuid = true];
-  Scale scale = 2;
+  string scale = 2 [(buf.validate.field).cel = {
+    id: "note_scale_must_be_valid"
+    message: "note scale must be one of minor or major"
+    expression: "this in ['minor', 'major']"
+  }];
 }
 
 message Range {
@@ -111,11 +164,6 @@ message Beatmaker {
   string pseudonym = 3;
 }
 
-enum Order {
-  ASC = 0;
-  DESC = 1;
-}
-
 message OrderBy {
   string order = 1 [(buf.validate.field).cel = {
     id: "order_by_order_must_be_valid"
@@ -134,7 +182,11 @@ message GetBeatsNote {
     min_len: 1
     max_len: 30
   }];
-  Scale scale = 2;
+  string scale = 2 [(buf.validate.field).cel = {
+    id: "note_scale_must_be_valid"
+    message: "note scale must be one of minor or major"
+    expression: "this in ['minor', 'major']"
+  }];
 }
 
 message GetBeatsRequest {
@@ -250,7 +302,11 @@ message NoteParam {
 
 message UpdateBeatNote {
   string note_id = 1 [(buf.validate.field).string.uuid = true];
-  Scale scale = 2;
+  string scale = 2 [(buf.validate.field).cel = {
+    id: "note_scale_must_be_valid"
+    message: "note scale must be one of minor or major"
+    expression: "this in ['minor', 'major']"
+  }];
 }
 
 message UpdateBeatRequest {

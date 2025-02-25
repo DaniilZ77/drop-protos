@@ -1,13 +1,17 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "audio/audio.proto",
-    "version": "version not set"
+    "title": "Drop Beats Service",
+    "version": "1.0"
   },
   "tags": [
     {
       "name": "BeatService"
     }
+  ],
+  "host": "localhost:8081",
+  "schemes": [
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -67,6 +71,11 @@
         ],
         "tags": [
           "BeatService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
@@ -156,12 +165,7 @@
             "name": "note.scale",
             "in": "query",
             "required": false,
-            "type": "string",
-            "enum": [
-              "MINOR",
-              "MAJOR"
-            ],
-            "default": "MINOR"
+            "type": "string"
           },
           {
             "name": "beatmakerId",
@@ -247,6 +251,11 @@
         ],
         "tags": [
           "BeatService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       },
       "patch": {
@@ -283,6 +292,11 @@
         ],
         "tags": [
           "BeatService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
@@ -321,6 +335,11 @@
         ],
         "tags": [
           "BeatService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     }
@@ -519,7 +538,7 @@
           "type": "string"
         },
         "scale": {
-          "$ref": "#/definitions/audioScale"
+          "type": "string"
         }
       }
     },
@@ -613,14 +632,6 @@
         }
       }
     },
-    "audioScale": {
-      "type": "string",
-      "enum": [
-        "MINOR",
-        "MAJOR"
-      ],
-      "default": "MINOR"
-    },
     "audioTagParam": {
       "type": "object",
       "properties": {
@@ -639,7 +650,7 @@
           "type": "string"
         },
         "scale": {
-          "$ref": "#/definitions/audioScale"
+          "type": "string"
         }
       }
     },
@@ -664,7 +675,7 @@
           "type": "string"
         },
         "scale": {
-          "$ref": "#/definitions/audioScale"
+          "type": "string"
         }
       }
     },
@@ -754,6 +765,14 @@
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "description": "Format: `bearer \u003ctoken\u003e`",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }
